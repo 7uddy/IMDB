@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="home-container">
+  <div class="all-movies">
+    <div class="trending">
+      <div class="top">
+        <h4>Trending Movies</h4>
+      </div>
+      <div *ngIf="trendingMovies | async as movies; else loading">
+        <div class="movies-thumbnail">
+          <div class="movie" *ngFor="let movie of movies">
+            <div class="cover">
+              <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}" (click)="onMovieClick('trending',movie)">
+            </div>
+            <div class="detail">
+              <div class="title">{{ movie.title }}</div>
+              <div class="rating">
+                <app-rating [averageRating]="movie.vote_average"></app-rating>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popular-movies">
+      <div class="top">
+        <h4>Top rated</h4>
+      </div>
+      <div *ngIf="topRated | async as movies; else loading">
+        <div class="movies-thumbnail">
+          <div class="movie" *ngFor="let movie of movies">
+            <div class="cover">
+              <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}" (click)="onMovieClick('topRated',movie)">
+            </div>
+            <div class="detail">
+              <div class="title">{{ movie.title }}</div>
+              <div class="rating">
+                <app-rating [averageRating]="movie.vote_average"></app-rating>
+              </div>
+            </div>
+            </div>
+
+        </div>
+      </div>
+      <ng-template #loading>
+        <div class="loading">
+          <p>Loading movies...</p>
+        </div>
+      </ng-template>

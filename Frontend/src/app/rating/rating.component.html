@@ -1,0 +1,9 @@
+<div class="rating">
+  <ng-container *ngFor="let star of stars">
+    <i [class]="star"></i>
+  </ng-container>
+
+  <span class="average-rating">
+    {{ averageRating | number: '1.1-1' }}
+  </span>
+</div>
