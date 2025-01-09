@@ -40,6 +40,7 @@ class AuthController extends Controller
     public function Logout()
     {
         $cookie=Cookie::forget('jwt');
+        Auth::user()->tokens()->delete();
         return response()->json([
             'message' => "Logout successful"
         ])->withCookie($cookie);

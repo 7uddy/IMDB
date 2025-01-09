@@ -16,6 +16,6 @@ export class HeaderComponent {
     this.router.navigate(['/home']);
   }
   logout() {
-    this.auth.logout();
+    // this.auth.logout();
   }
 }

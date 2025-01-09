@@ -12,9 +12,9 @@ import { ApiService } from '../services/api.service';
 })
 export class LoginComponent implements OnInit {
 
-  user: any;
-  username: string = '';
+  email: string = '';
   password: string = '';
+  errorMessage: string = '';
 
 
   constructor(private auth: AuthService) { }
@@ -22,12 +22,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-   {
-    this.auth.login(this.username, this.password).subscribe(res=>
-    {
-      console.log(res);
-    }
-    );
+  login() {
+    //this.auth.login(this.username, this.password);
   }
+
 
 }

@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,16 +7,17 @@
   background: url('https://cdn.pixabay.com/photo/2016/10/29/09/06/abstract-1780089_960_720.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;}
+  background-repeat: no-repeat;
+}
 
 .imdb-logo {
   width: 225px;
-  margin-right: 15%;
+  margin-right:15%;
 }
 
-.login-form {
+.register-form {
   width: 500px;
-  height: 350px;
+  height: 530px;
   padding: 20px;
   background-color: rgba(165,165,165,0.15);
   backdrop-filter: blur(20px);
@@ -40,6 +41,7 @@
   outline:none;
   background-color: transparent;
 }
+
 
 label {
   display: block;
@@ -76,7 +78,8 @@ button {
 button:hover {
   background-color: #e65600;
 }
-.error{
+
+.error {
   color: red;
   font-size: 14px;
   margin-top: 5px;
@@ -90,27 +93,26 @@ button:hover {
   color: #888888 !important;
 }
 
-.register-link {
+.login-link {
   margin-top: 15px;
   margin-bottom: 10px;
   text-align: center;
 }
 
-.register-link p {
+.login-link p {
   font-size: 14px;
   color: #888888;
   margin: 0;
 }
 
-.register-link-text {
+.login-link-text {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
 }
 
-.register-link-text:hover {
+.login-link-text:hover {
   text-decoration: underline;
   color: #0056b3;
 }
-
