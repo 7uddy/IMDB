@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
 import { RatingComponent } from "../rating/rating.component";
+import { AuthService } from '../services/auth.service';
+import { Emitters } from '../emitters/emitters';
 
 @Component({
   selector: 'app-home',
@@ -14,13 +16,30 @@ import { RatingComponent } from "../rating/rating.component";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  message: string = '';
+
   trendingMovies: Observable<any[]> = new Observable();
   topRated: Observable<any[]> = new Observable();
   counter: number = 0;
 
-  constructor(private apiService:ApiService,private router:Router) { }
+  constructor(private apiService:ApiService,private auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
+
+    this.auth.getUser().subscribe({
+      next: (user) => {
+        this.message = 'Welcome, ' + user.name + '!';
+        Emitters.authEmitter.emit(true);
+      },
+      error: (error) => {
+        this.message = 'You are not logged in!';
+        Emitters.authEmitter.emit(false);
+      }
+    });
+
+
+
+
     this.trendingMovies = this.getMovies(6,'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1');
     this.topRated = this.getMovies(6,'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1');
 
