@@ -13,11 +13,23 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function Register(Request $request) {
-        return User::create([
-            'name'=>$request->input('name'),
-            'email'=>$request->input('email'),
-            'password'=>Hash::make($request->input('password'))
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|string',
+            'password' => 'required|string',
         ]);
+
+        if (User::where('email', $validated['email'])->exists()) {
+            return response()->json(['error' => 'Email already taken'], 422);
+        }
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+        ]);
+
+        return response()->json($user, 201);
     }
 
     public function Login(Request $request)

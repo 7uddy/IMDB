@@ -35,8 +35,17 @@ export class RegisterComponent {
       return;
     }
 
-    this.auth.register(name, email, password).subscribe((response) => {
-      this.router.navigate(['/login']);
+    this.auth.register(name, email, password).subscribe({
+      next: (user) => {
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        if (error.error && error.error.error) {
+          this.errorMessage = error.error.error;
+        } else {
+          this.errorMessage = error.error || 'An unknown error occurred';
+        }
+      }
     });
   }
 }

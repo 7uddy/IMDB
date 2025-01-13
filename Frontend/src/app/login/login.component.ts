@@ -33,8 +33,18 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.form.value;
 
-    this.auth.login(email, password).subscribe((response) => {
-      this.router.navigate(['/home']);
+    this.auth.login(email, password).subscribe({
+      next: (user) => {
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        if (error.error && error.error.error) {
+          this.errorMessage = error.error.error;
+        } else {
+          this.errorMessage = error.error || 'An unknown error occurred';
+        }
+      }
     });
   }
 }
+
