@@ -13,9 +13,8 @@ import { RatingComponent } from "../rating/rating.component";
   styleUrl: './movie.component.scss'
 })
 export class MovieComponent implements OnInit {
-  type: string = '';
+  category: string = '';
   id: string = '';
-  url: string = 'https://api.themoviedb.org/3/find/{external_id}';
   movie:any;
 HomeComponent: any;
 
@@ -23,14 +22,14 @@ HomeComponent: any;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.type = params['category'];
+      this.category = params['category'];
       this.id = params['id'];
     });
     this.getMovie();
   }
   getMovie() {
-    // this.apiService.getMovieByID(this.id).subscribe((movie) => {
-    //   this.movie = movie;
-    // });
+    this.apiService.getMovieByID(this.id).subscribe((movie) => {
+      this.movie = movie;
+    });
   }
 }

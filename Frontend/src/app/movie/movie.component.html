@@ -1,39 +1,31 @@
 <app-header></app-header>
 <div class="movie-container">
-  <!-- Banner Section -->
   <div class="banner">
     <img src="https://image.tmdb.org/t/p/original{{movie.backdrop_path}}" alt="Movie Banner" />
   </div>
 
-  <!-- Movie Information Section -->
   <div class="movie-info">
     <div class="left">
-      <!-- Main Movie Image -->
       <img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="{{movie.title}}" class="main-image" />
     </div>
 
     <div class="right">
-      <!-- Title and Info -->
       <div class="title">
-        <h1>{{movie.title}} <span class="year">{{movie.release_year}}</span></h1>
-        <p class="director">Directed by: {{movie.director}}</p>
+        <h1>{{ movie.title }} <span class="year">{{ movie.release_date.slice(0, 4) }}</span></h1>
+        <p class="quote">{{movie.tagline}}</p>
+        <div class="rating">
+          <app-rating [averageRating]="movie.vote_average" [isReadOnly]="true"></app-rating>
+        </div>
       </div>
-
-      <!-- Rating -->
-      <div class="rating">
-        <app-rating [averageRating]="movie.vote_average" [isReadOnly]="true"></app-rating>
-      </div>
-
-      <!-- Description -->
       <div class="description">
-        <p>{{movie.description}}</p>
+        <p>{{movie.overview}}</p>
       </div>
     </div>
   </div>
 
-  <!-- Bottom Section for any additional content
+  <!-- Bottom Section for any additional content -->
   <div class="bottom">
     <button class="sign-in">Sign in to log, rate or review</button>
     <button class="share">Share</button>
-  </div> -->
+  </div>
 </div>

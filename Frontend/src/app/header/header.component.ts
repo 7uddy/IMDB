@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Emitters } from '../emitters/emitters';
 import { CommonModule } from '@angular/common';
+import { AuthStateService } from '../services/auth-state.service';
 
 
 @Component({
@@ -14,22 +15,19 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent implements OnInit {
 
   authenticated: boolean = false;
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService,private authState:AuthStateService) { }
 
   ngOnInit(): void {
-    Emitters.authEmitter.subscribe((auth: boolean) => {
+    this.authState.getAuthState().subscribe((auth) => {
       this.authenticated = auth;
     });
   }
 
-  goToHome() {
-    this.router.navigate(['/home']);
-  }
-  
   logout() {
     this.auth.logout().subscribe({
       next: (data) => {
         this.authenticated = false;
+        Emitters.authEmitter.emit(false);
       },
       error: (error) => {
         if (error.error && error.error.error) {

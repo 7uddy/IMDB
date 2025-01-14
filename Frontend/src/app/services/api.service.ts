@@ -10,14 +10,18 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getPopularMovies(): Observable<any> {
-    const headers = new HttpHeaders().set('X-Number-Of-Movies', '12');
+  getPopularMovies(limit:number=6): Observable<any> {
+    const headers = new HttpHeaders().set('X-Number-Of-Movies', limit.toString());
     return this.http.get(`${this.apiUrl}/movies/trending`, { headers });
   }
 
-  getTopRatedMovies(): Observable<any> {
-    const headers = new HttpHeaders().set('X-Number-Of-Movies', '12');
+  getTopRatedMovies(limit:number=6): Observable<any> {
+    const headers = new HttpHeaders().set('X-Number-Of-Movies', limit.toString());
     return this.http.get(`${this.apiUrl}/movies/top_rated`, { headers });
+  }
+
+  getMovieByID(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/movies/${id}`);
   }
 
 }

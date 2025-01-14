@@ -56,4 +56,19 @@ class MovieController extends Controller
 
         return response()->json($limitedMovies);
     }
+
+    public function getMovieDetails($id)
+    {
+        $response = $this->client->get("movie/{$id}", [
+            'headers' => [
+                'Authorization' => config('tmdb.api_key'),
+            ],
+            'query' => [
+                'language' => config('tmdb.language'),
+            ],
+        ]);
+        $movie = json_decode($response->getBody(), true);
+
+        return response()->json($movie);
+    }
 }
