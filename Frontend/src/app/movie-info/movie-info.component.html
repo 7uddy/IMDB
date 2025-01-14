@@ -1,0 +1,18 @@
+<div class="movie-info">
+  <div class="left">
+    <img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="{{movie.title}}" class="main-image" />
+  </div>
+
+  <div class="right">
+    <div class="title">
+      <h1>{{ movie.title }} <span class="year">{{ movie.release_date.slice(0, 4) }}</span></h1>
+      <p class="quote">{{movie.tagline}}</p>
+      <div class="rating">
+        <app-rating [averageRating]="movie.vote_average" [isReadOnly]="true"></app-rating>
+      </div>
+      <div class="description">
+        <p>{{movie.overview}}</p>
+      </div>
+    </div>
+  </div>
+</div>

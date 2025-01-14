@@ -4,28 +4,5 @@
     <img src="https://image.tmdb.org/t/p/original{{movie.backdrop_path}}" alt="Movie Banner" />
   </div>
 
-  <div class="movie-info">
-    <div class="left">
-      <img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="{{movie.title}}" class="main-image" />
-    </div>
-
-    <div class="right">
-      <div class="title">
-        <h1>{{ movie.title }} <span class="year">{{ movie.release_date.slice(0, 4) }}</span></h1>
-        <p class="quote">{{movie.tagline}}</p>
-        <div class="rating">
-          <app-rating [averageRating]="movie.vote_average" [isReadOnly]="true"></app-rating>
-        </div>
-      </div>
-      <div class="description">
-        <p>{{movie.overview}}</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bottom Section for any additional content -->
-  <div class="bottom">
-    <button class="sign-in">Sign in to log, rate or review</button>
-    <button class="share">Share</button>
-  </div>
+  <app-movie-info [movie]="movie"></app-movie-info>
 </div>

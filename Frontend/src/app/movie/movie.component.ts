@@ -4,11 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
-import { RatingComponent } from "../rating/rating.component";
+import { MovieInfoComponent } from "../movie-info/movie-info.component";
 
 @Component({
   selector: 'app-movie',
-  imports: [HeaderComponent, CommonModule, RatingComponent],
+  imports: [HeaderComponent, CommonModule, MovieInfoComponent],
   templateUrl: './movie.component.html',
   styleUrl: './movie.component.scss'
 })
