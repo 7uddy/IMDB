@@ -24,12 +24,18 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/movies/${id}`);
   }
 
-  getFilms(page: string): Observable<any> {
+  getFilms(page: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/movies/page/${page}`);
   }
 
-  searchFilmsByText(searchText: string, page: string): Observable<any> {
+  searchFilmsByText(searchText: string, page: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/movies/page/${page}/search/${searchText}`);
+  }
+
+  searchFilmsByGenre(genre: string, page: number,sort:string): Observable<any> {
+    if(sort==='')
+      return this.http.get(`${this.apiUrl}/movies/page/${page}/genre/${genre}/sort/popularity`);
+    return this.http.get(`${this.apiUrl}/movies/page/${page}/genre/${genre}/sort/${sort}`);
   }
 
 

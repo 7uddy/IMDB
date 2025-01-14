@@ -89,7 +89,7 @@ class MovieController extends Controller
         return response()->json($movies);
     }
 
-    public function searchMovie($page, $search)
+    public function searchMovieByText($page, $search)
     {
         $response = $this->client->get('search/movie', [
             'headers' => [
@@ -104,6 +104,65 @@ class MovieController extends Controller
         $movies = json_decode($response->getBody(), true)['results'];
 
         return response()->json($movies);
+    }
 
+    public function getMoviesByGenreWithSort($page, $genre,$sort)
+    {
+        switch (strtolower($sort)) {
+            case 'year_desc':
+                $sort = 'primary_release_date.desc';
+                break;
+            case 'year_asc':
+                $sort = 'primary_release_date.asc';
+                break;
+            case 'title_asc':
+                $sort = 'title.asc';
+                break;
+            case 'title_desc':
+                $sort = 'title.desc';
+                break;
+            default:
+                $sort = 'popularity.desc';
+                break;
+        }
+
+        switch (strtolower($genre)){
+            case 'action':
+                $genre = 28;
+                break;
+            case 'comedy':
+                $genre = 35;
+                break;
+            case 'drama':
+                $genre = 18;
+                break;
+            case 'horror':
+                $genre = 27;
+                break;
+            case 'sci_fi':
+                $genre = 878;
+                break;
+            case 'fantasy':
+                $genre = 14;
+                break;
+            default:
+                $genre = 28;
+                break;
+        }
+
+        $response = $this->client->get('discover/movie', [
+            'headers' => [
+                'Authorization' => config('tmdb.api_key'),
+            ],
+            'query' => [
+                'language' => config('tmdb.language'),
+                'page' => $page,
+                'with_genres' => $genre,
+                'sort_by' => $sort,
+            ],
+        ]);
+        $movies = json_decode($response->getBody(), true)['results'];
+
+        return response()->json($movies);
     }
 }

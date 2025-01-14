@@ -1,45 +1,83 @@
 .home-container {
   display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
+.all-movies {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  padding: 30px 30px;
+  font-family: 'Roboto', sans-serif;
+  border-right: 1px solid #e0e0e0;
+  box-sizing: border-box;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top h4 {
+  text-transform: uppercase;
+  font-weight: bold;
+  border-left: 5px solid orange;
+  padding-left: 10px;
+  margin-top:10px;
+}
+
+.movies-thumbnail {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.movie {
+  width: 15%;
+  min-width: 150px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  box-sizing: border-box;
+}
+
+.movie:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.1);
+}
+
+.loading {
+  font-size: 24px;
+  color: #7e7e7e;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+@media (max-width: 768px) {
   .all-movies {
-    width: 100%;
-    min-height: calc(100vh - 80px);
-    border-right: 1px solid black;
-    padding: 20px 40px;
-    font-family: 'Roboto', sans-serif;
-
-    .top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      h4 {
-        text-transform: uppercase;
-        font-weight: bold;
-        border-left: 5px solid orange;
-        padding-left: 10px;
-      }
-    }
-
-    .movies-thumbnail {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-
-      .movie {
-        width: 15%;
-        margin-bottom: 20px;
-        margin-right: 10px;
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .movie:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      }
-    }
+    padding: 20px 15px;
   }
 
+  .movies-thumbnail {
+    justify-content: flex-start;
+    gap: 15px;
+  }
+
+  .movie {
+    width: 45%;
+  }
+
+  .top h4 {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie {
+    width: 90%;
+  }
 }

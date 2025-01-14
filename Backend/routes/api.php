@@ -12,7 +12,8 @@ Route::get('/movies/trending', [App\Http\Controllers\MovieController::class, 'ge
 Route::get('/movies/top_rated', [App\Http\Controllers\MovieController::class, 'getTopRatedMovies']);
 Route::get('/movies/{id}', [App\Http\Controllers\MovieController::class, 'getMovieDetails']);
 Route::get('/movies/page/{page}', [App\Http\Controllers\MovieController::class, 'getMoviesByPage']);
-Route::get('/movies/page/{page}/search/{search}', [App\Http\Controllers\MovieController::class, 'searchMovie']);
+Route::get('/movies/page/{page}/search/{search}', [App\Http\Controllers\MovieController::class, 'searchMovieByText']);
+Route::get('/movies/page/{page}/genre/{genre}/sort/{sort}', [App\Http\Controllers\MovieController::class, 'getMoviesByGenreWithSort']);
 
 //Protected routes
 Route::middleware('auth:sanctum')->group(function () {

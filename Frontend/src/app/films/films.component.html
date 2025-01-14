@@ -1,47 +1,59 @@
 <app-header></app-header>
 <div class="base-container">
   <div>
-      <div class="film-list">
-          <div class="filter-container">
-              <div class="search-container">
-                  <input type="text" [(ngModel)]="searchText" name="search" id="searchInput" placeholder="Search by title" class="search-bar">
-                  <img src="https://www.freeiconspng.com/uploads/search-icon-png-5.png" alt="Search Icon" class="search-icon" (click)="onSearch()">
-              </div>
-              <select [(ngModel)]="selectedGenre" id="genreFilter">
-                  <option value="" disabled selected>Genre</option>
-                  <option value="all">All</option>
-                  <option value="Action">Action</option>
-                  <option value="Comedy">Comedy</option>
-                  <option value="Drama">Drama</option>
-                  <option value="Sci-Fi">Sci-Fi</option>
-                  <option value="Horror">Horror</option>
-                  <option value="Fantasy">Fantasy</option>
-                  <option value="Other">Other</option>
-              </select>
-              <select [(ngModel)]="selectedRating" id="ratingFilter">
-                  <option value="" disabled selected>Rating</option>
-                  <option value="all">All</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-              </select>
-              <select [(ngModel)]="selectedSort" id="sortFilter">
-                  <option value="" disabled selected>Sort</option>
-                  <option value="year_desc">Latest</option>
-                  <option value="year_asc">Oldest</option>
-                  <option value="rating_desc">Highest Rated</option>
-                  <option value="rating_asc">Lowest Rated</option>
-                  <option value="title_asc">Title (A-Z)</option>
-                  <option value="title_desc">Title (Z-A)</option>
-              </select>
-          </div>
-          <div class="film-poster-list" id="film-poster-list">
-              <div class="film-poster" *ngFor="let movie of filteredMovies">
-                  <app-movie-poster [movie]="movie"></app-movie-poster>
-              </div>
-          </div>
+    <div class="film-list">
+      <div class="filter-container">
+        <div class="search-container">
+          <input type="text" [(ngModel)]="searchText" (ngModelChange)="onSearchTextChange()" name="search"
+            id="searchInput" placeholder="Search by title" class="search-bar" [disabled]="selectedGenre != 'all'">
+        </div>
+        <select [(ngModel)]="selectedSort" (ngModelChange)="sortMovies()" id="sortFilter">
+          <option value="" disabled selected>Sort</option>
+          <option value="year_desc">Latest</option>
+          <option value="year_asc">Oldest</option>
+          <option value="title_asc">Title (A-Z)</option>
+          <option value="title_desc">Title (Z-A)</option>
+        </select>
+        <select [(ngModel)]="selectedGenre" id="genreFilter" (ngModelChange)="onGenreChange()">
+          <option value="" disabled selected>Discover by Genre</option>
+          <option value="all">All</option>
+          <option value="Action">Action</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Drama">Drama</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Horror">Horror</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Other">Other</option>
+        </select>
       </div>
+
+      <ng-template #loading>
+        <div class="loading">
+          <p>Loading movies...</p>
+        </div>
+      </ng-template>
+
+      <div *ngIf="isLoading; else movieList">
+        <ng-container *ngTemplateOutlet="loading"></ng-container>
+      </div>
+
+      <ng-template #movieList>
+        <div class="film-poster-list" id="film-poster-list">
+          <div class="film-poster" *ngFor="let movie of filteredMovies">
+            <app-movie-poster [movie]="movie"></app-movie-poster>
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="pagination">
+        <button (click)="goToPreviousPage()" [disabled]="page === 1" class="pagination-btn">
+          Previous
+        </button>
+
+        <button (click)="goToNextPage()" [disabled]="!hasNextPage" class="pagination-btn">
+          Next
+        </button>
+      </div>
+    </div>
   </div>
 </div>
