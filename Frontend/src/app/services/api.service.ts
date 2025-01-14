@@ -1,30 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://localhost/api.php';
+  private apiUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) {}
 
-  getCounterForSession(): Observable<any> {
-    return this.http.get(`${this.apiUrl}?action=counter`,{
-      withCredentials: true
-    });
+  getPopularMovies(): Observable<any> {
+    const headers = new HttpHeaders().set('X-Number-Of-Movies', '12');
+    return this.http.get(`${this.apiUrl}/movies/trending`, { headers });
   }
 
-  getMovieByID(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}?action=movie&movie_id=${id}`,{
-      withCredentials: true
-    });
+  getTopRatedMovies(): Observable<any> {
+    const headers = new HttpHeaders().set('X-Number-Of-Movies', '12');
+    return this.http.get(`${this.apiUrl}/movies/top_rated`, { headers });
   }
 
-  checkLogin(): Observable<any> {
-    return this.http.get(`${this.apiUrl}?action=check_login`,{
-      withCredentials: true
-    });
-  }
 }

@@ -29,8 +29,8 @@ HomeComponent: any;
     this.getMovie();
   }
   getMovie() {
-    this.apiService.getMovieByID(this.id).subscribe((movie) => {
-      this.movie = movie;
-    });
+    // this.apiService.getMovieByID(this.id).subscribe((movie) => {
+    //   this.movie = movie;
+    // });
   }
 }

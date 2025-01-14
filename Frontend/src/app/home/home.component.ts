@@ -16,11 +16,10 @@ import { Emitters } from '../emitters/emitters';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  message: string = '';
 
   trendingMovies: Observable<any[]> = new Observable();
   topRated: Observable<any[]> = new Observable();
-  counter: number = 0;
+
 
   constructor(private apiService:ApiService,private auth:AuthService,private router:Router) { }
 
@@ -28,36 +27,15 @@ export class HomeComponent implements OnInit {
 
     this.auth.getUser().subscribe({
       next: (user) => {
-        this.message = 'Welcome, ' + user.name + '!';
         Emitters.authEmitter.emit(true);
       },
       error: (error) => {
-        this.message = 'You are not logged in!';
         Emitters.authEmitter.emit(false);
       }
     });
 
-
-
-
-    this.trendingMovies = this.getMovies(6,'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1');
-    this.topRated = this.getMovies(6,'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1');
-
-    this.apiService.getCounterForSession().subscribe((data) => {
-      console.log(data);
-    });
-
-    //   this.trendingMovies.subscribe({
-    //   next: (movies) => {
-    //     console.log('Filmele trending:', movies);
-    //   },
-    //   error: (err) => {
-    //     console.error('Eroare la obținerea filmelor:', err);
-    //   },
-    //   complete: () => {
-    //     console.log('Observable complet!');
-    //   },
-    // });
+    this.trendingMovies = this.apiService.getPopularMovies();
+    this.topRated = this.apiService.getTopRatedMovies();
   }
 
   onMovieClick(category:string,movie:any):void{
