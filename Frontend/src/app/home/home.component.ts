@@ -4,14 +4,14 @@ import { Observable, from } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
-import { RatingComponent } from "../rating/rating.component";
 import { AuthService } from '../services/auth.service';
 import { Emitters } from '../emitters/emitters';
+import { MoviePosterComponent } from "../movie-poster/movie-poster.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, CommonModule, RatingComponent],
+  imports: [HeaderComponent, CommonModule, MoviePosterComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

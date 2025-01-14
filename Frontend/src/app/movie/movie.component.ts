@@ -22,7 +22,6 @@ HomeComponent: any;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.category = params['category'];
       this.id = params['id'];
     });
     this.getMovie();

@@ -1,0 +1,10 @@
+<div class="cover">
+  <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}"
+    (click)="onMovieClick(movie)">
+</div>
+<div class="detail">
+  <div class="title">{{ movie.title }}</div>
+  <div class="rating">
+    <app-rating [averageRating]="movie.vote_average"></app-rating>
+  </div>
+</div>

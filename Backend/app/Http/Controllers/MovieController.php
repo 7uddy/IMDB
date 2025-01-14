@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Container\Attributes\Log;
 
 class MovieController extends Controller
 {
@@ -70,5 +71,39 @@ class MovieController extends Controller
         $movie = json_decode($response->getBody(), true);
 
         return response()->json($movie);
+    }
+
+    public function getMoviesByPage($page)
+    {
+        $response = $this->client->get('movie/now_playing', [
+            'headers' => [
+                'Authorization' => config('tmdb.api_key'),
+            ],
+            'query' => [
+                'language' => config('tmdb.language'),
+                'page' => $page,
+            ],
+        ]);
+        $movies = json_decode($response->getBody(), true)['results'];
+
+        return response()->json($movies);
+    }
+
+    public function searchMovie($page, $search)
+    {
+        $response = $this->client->get('search/movie', [
+            'headers' => [
+                'Authorization' => config('tmdb.api_key'),
+            ],
+            'query' => [
+                'language' => config('tmdb.language'),
+                'page' => $page,
+                'query' => $search,
+            ],
+        ]);
+        $movies = json_decode($response->getBody(), true)['results'];
+
+        return response()->json($movies);
+
     }
 }

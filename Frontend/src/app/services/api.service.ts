@@ -8,14 +8,14 @@ import { Observable } from 'rxjs';
 export class ApiService {
   private apiUrl = 'http://localhost:8000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getPopularMovies(limit:number=6): Observable<any> {
+  getPopularMovies(limit: number = 6): Observable<any> {
     const headers = new HttpHeaders().set('X-Number-Of-Movies', limit.toString());
     return this.http.get(`${this.apiUrl}/movies/trending`, { headers });
   }
 
-  getTopRatedMovies(limit:number=6): Observable<any> {
+  getTopRatedMovies(limit: number = 6): Observable<any> {
     const headers = new HttpHeaders().set('X-Number-Of-Movies', limit.toString());
     return this.http.get(`${this.apiUrl}/movies/top_rated`, { headers });
   }
@@ -23,5 +23,14 @@ export class ApiService {
   getMovieByID(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/movies/${id}`);
   }
+
+  getFilms(page: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/movies/page/${page}`);
+  }
+
+  searchFilmsByText(searchText: string, page: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/movies/page/${page}/search/${searchText}`);
+  }
+
 
 }

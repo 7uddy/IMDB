@@ -8,15 +8,7 @@
       <div *ngIf="trendingMovies | async as movies; else loading">
         <div class="movies-thumbnail">
           <div class="movie" *ngFor="let movie of movies">
-            <div class="cover">
-              <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}" (click)="onMovieClick('trending',movie)">
-            </div>
-            <div class="detail">
-              <div class="title">{{ movie.title }}</div>
-              <div class="rating">
-                <app-rating [averageRating]="movie.vote_average"></app-rating>
-              </div>
-            </div>
+            <app-movie-poster [movie]="movie"></app-movie-poster>
           </div>
         </div>
       </div>
@@ -28,17 +20,8 @@
       <div *ngIf="topRated | async as movies; else loading">
         <div class="movies-thumbnail">
           <div class="movie" *ngFor="let movie of movies">
-            <div class="cover">
-              <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{movie.title}}" (click)="onMovieClick('topRated',movie)">
-            </div>
-            <div class="detail">
-              <div class="title">{{ movie.title }}</div>
-              <div class="rating">
-                <app-rating [averageRating]="movie.vote_average"></app-rating>
-              </div>
-            </div>
-            </div>
-
+            <app-movie-poster [movie]="movie"></app-movie-poster>
+          </div>
         </div>
       </div>
       <ng-template #loading>
