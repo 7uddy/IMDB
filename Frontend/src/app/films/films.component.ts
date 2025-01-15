@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { ApiService } from '../services/api.service';
 import { MoviePosterComponent } from "../movie-poster/movie-poster.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, switchMap, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+interface Movie {
+  id: string;
+  title: string;
+  release_date: string;
+  genre: string;
+  [key: string]: any;
+}
 
 @Component({
   selector: 'app-films',
@@ -14,15 +23,15 @@ import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
 })
 export class FilmsComponent implements OnInit {
 
-  filteredMovies: any;
+  filteredMovies: Movie[] = [];
   searchText: string = '';
   searchSubject: Subject<string> = new Subject();
-  isLoading=true;
+  isLoading: boolean = true;
 
   selectedGenre: string = 'all';
   selectedSort: string = '';
   page: number = 1;
-  hasNextPage: any;
+  hasNextPage: boolean = false;
 
   constructor(private api: ApiService) {
     this.searchSubject.pipe(
@@ -31,21 +40,51 @@ export class FilmsComponent implements OnInit {
       switchMap(searchText => this.onSearch(searchText))
     ).subscribe(movies => {
       this.filteredMovies = movies;
-      this.page++;
-      this.onSearch(this.searchText).subscribe((movies) => { this.hasNextPage = movies.length > 1; });
-      this.page--;
+      this.updateHasNextPage();
       this.sortMovies();
     });
   }
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.api.getFilms(this.page).subscribe((movies) => {
+    this.fetchMovies().subscribe(movies => {
       this.filteredMovies = movies;
       this.isLoading = false;
+      this.updateHasNextPage();
     });
-    this.api.getFilms(this.page+1).subscribe((movies) => {
+  }
+
+  fetchMovies() {
+    if (this.searchText) {
+      return this.api.searchFilmsByText(this.searchText, this.page).pipe(
+        catchError(err => {
+          console.error('Error on film loading ', err);
+          return of([]);
+        })
+      );
+    } else if (this.selectedGenre !== 'all') {
+      return this.api.searchFilmsByGenre(this.selectedGenre, this.page, this.selectedSort).pipe(
+        catchError(err => {
+          console.error('Error on film loading ', err);
+          return of([]);
+        })
+      );
+    } else {
+      return this.api.getFilms(this.page).pipe(
+        catchError(err => {
+          console.error('Error on film loading ', err);
+          return of([]);
+        })
+      );
+    }
+  }
+
+  updateHasNextPage() {
+    this.page++;
+    const nextPage$ = this.fetchMovies();
+    nextPage$.subscribe(movies => {
       this.hasNextPage = movies.length > 1;
+      this.page--;
     });
   }
 
@@ -54,126 +93,62 @@ export class FilmsComponent implements OnInit {
   }
 
   onSearch(searchText: string) {
-    if (searchText === '') return this.api.getFilms(this.page);
-    return this.api.searchFilmsByText(searchText, this.page);
+    this.page = 1;
+    return this.fetchMovies();
+  }
+
+  navigatePage(direction: 'next' | 'previous') {
+    const increment = direction === 'next' ? 1 : -1;
+    this.page += increment;
+
+    this.fetchMovies().subscribe(movies => {
+      this.filteredMovies = movies;
+      this.sortMovies();
+      this.updateHasNextPage();
+      this.scrollToTop();
+    });
   }
 
   goToPreviousPage() {
-    if (this.page > 1 && this.searchText === '' && this.selectedGenre==='all') {
-      this.page--;
-      this.api.getFilms(this.page).subscribe((movies) => {
-        this.filteredMovies = movies;
-        this.hasNextPage = true;
-        this.sortMovies();
-      });
-      this.scrollToTop();
-    }
-    else if (this.page > 1 && this.searchText !== '' && this.selectedGenre==='all') {
-      this.page--;
-      this.api.searchFilmsByText(this.searchText, this.page).subscribe((movies) => {
-        this.filteredMovies = movies;
-        this.hasNextPage = true;
-        this.sortMovies();
-      });
-      this.scrollToTop();
-    }
-    else if(this.page > 1 && this.selectedGenre!=='all'){
-      this.page--;
-      this.api.searchFilmsByGenre(this.selectedGenre, this.page,this.selectedSort).subscribe((movies) => {
-        this.filteredMovies = movies;
-        this.hasNextPage = true;
-      });
-      this.scrollToTop();
-    }
+    if (this.page > 1) this.navigatePage('previous');
   }
 
   goToNextPage() {
-    if (this.hasNextPage && this.searchText === '' && this.selectedGenre==='all') {
-      this.page++;
-      this.api.getFilms(this.page).subscribe((movies) => {
-        this.filteredMovies = movies;
-        this.sortMovies();
-      });
-      this.api.getFilms(this.page+1).subscribe((movies) => {
-        this.hasNextPage = movies.length > 1;
-      });
-      this.scrollToTop();
-    }
-    else if (this.hasNextPage && this.searchText !== '' && this.selectedGenre==='all') {
-      this.page++;
-      this.api.searchFilmsByText(this.searchText, this.page).subscribe((movies) => {
-        this.filteredMovies = movies;
-        this.sortMovies();
-      });
-      this.api.searchFilmsByText(this.searchText, this.page+1).subscribe((movies) => {
-        this.hasNextPage = movies.length > 1;
-      });
-      this.scrollToTop();
-    }
-    else if(this.hasNextPage && this.selectedGenre!=='all'){
-      this.page++;
-      this.api.searchFilmsByGenre(this.selectedGenre, this.page,this.selectedSort).subscribe((movies) => {
-        this.filteredMovies = movies;
-      });
-      this.api.searchFilmsByGenre(this.selectedGenre, this.page+1,this.selectedSort).subscribe((movies) => {
-        this.hasNextPage = movies.length > 1;
-      });
-      this.scrollToTop();
-    }
+    if (this.hasNextPage) this.navigatePage('next');
   }
 
   onGenreChange() {
-    if(this.selectedGenre==='all')
-    {
-      this.api.getFilms(this.page).subscribe((movies) => {
-        this.filteredMovies = movies;
-        this.sortMovies();
-      });
-      this.api.getFilms(this.page+1).subscribe((movies) => {
-        this.hasNextPage = movies.length > 1;
-      });
-      return;
-    }
-    this.api.searchFilmsByGenre(this.selectedGenre, this.page,this.selectedSort).subscribe((movies) => {
+    this.searchText = '';
+    this.page = 1;
+    this.fetchMovies().subscribe(movies => {
       this.filteredMovies = movies;
-    });
-    this.api.searchFilmsByGenre(this.selectedGenre, this.page+1,this.selectedSort).subscribe((movies) => {
-      this.hasNextPage = movies.length > 1;
+      this.updateHasNextPage();
     });
   }
 
   sortMovies() {
-    if(this.selectedGenre!=='all')
-    {
-      this.api.searchFilmsByGenre(this.selectedGenre, this.page,this.selectedSort).subscribe((movies) => {
+    if (this.selectedGenre !== 'all' && this.page == 1) {
+      this.fetchMovies().subscribe(movies => {
         this.filteredMovies = movies;
-      });
-      this.api.searchFilmsByGenre(this.selectedGenre, this.page+1,this.selectedSort).subscribe((movies) => {
-        this.hasNextPage = movies.length > 1;
+        this.updateHasNextPage();
       });
       return;
     }
-    if (this.selectedSort === 'year_desc') {
-      this.filteredMovies = this.filteredMovies.sort((a: { release_date: string | number | Date; }, b: { release_date: string | number | Date; }) => {
-        return new Date(b.release_date).getTime() - new Date(a.release_date).getTime();
-      });
-    }
-    else if (this.selectedSort === 'year_asc') {
-      this.filteredMovies = this.filteredMovies.sort((a: { release_date: string | number | Date; }, b: { release_date: string | number | Date; }) => {
-        return new Date(a.release_date).getTime() - new Date(b.release_date).getTime();
-      });
-    }
-    else if (this.selectedSort === 'title_asc') {
-      this.filteredMovies = this.filteredMovies.sort((a: { title: string; }, b: { title: any; }) => {
-        return a.title.localeCompare(b.title);
-      });
-    }
-    else if (this.selectedSort === 'title_desc') {
-      this.filteredMovies = this.filteredMovies.sort((a: { title: any; }, b: { title: string; }) => {
-        return b.title.localeCompare(a.title);
-      });
+    else if (!this.selectedSort || this.selectedGenre !== 'all') return;
+
+    const sortMap: { [key: string]: (a: Movie, b: Movie) => number } = {
+      'year_desc': (a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime(),
+      'year_asc': (a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime(),
+      'title_asc': (a, b) => a.title.localeCompare(b.title),
+      'title_desc': (a, b) => b.title.localeCompare(a.title),
+    };
+
+    const sortFn = sortMap[this.selectedSort];
+    if (sortFn) {
+      this.filteredMovies = this.filteredMovies.sort(sortFn);
     }
   }
+
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

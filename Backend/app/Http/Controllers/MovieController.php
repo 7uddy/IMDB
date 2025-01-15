@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use Illuminate\Container\Attributes\Log;
+use Illuminate\Support\Facades\Log;
 
 class MovieController extends Controller
 {
@@ -157,8 +157,8 @@ class MovieController extends Controller
             'query' => [
                 'language' => config('tmdb.language'),
                 'page' => $page,
-                'with_genres' => $genre,
                 'sort_by' => $sort,
+                'with_genres' => $genre,
             ],
         ]);
         $movies = json_decode($response->getBody(), true)['results'];
