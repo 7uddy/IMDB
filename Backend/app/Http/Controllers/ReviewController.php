@@ -45,4 +45,14 @@ class ReviewController extends Controller
 
         return response()->json($review, Response::HTTP_OK);
     }
+
+    public function getUserReviews()
+    {
+        $user_id = Auth::user()->id;
+
+        $reviews = Review::where('user_id', $user_id)
+            ->get();
+
+        return response()->json($reviews, Response::HTTP_OK);
+    }
 }

@@ -1,0 +1,13 @@
+<app-header></app-header>
+<div class="is-authenticated" *ngIf="isAuthenticated">
+  <div *ngFor="let review of reviews" class="movie-container">
+    <app-movie-info [movie]="review">
+      <div class="view-more">
+        <button class="btn" (click)="goToMovie(review.movie_id)">View Movie</button>
+      </div>
+    </app-movie-info>
+  </div>
+</div>
+<div class="not-authenticated" *ngIf="!isAuthenticated">
+  <p class="login-message">Please log in to view your reviews.</p>
+</div>

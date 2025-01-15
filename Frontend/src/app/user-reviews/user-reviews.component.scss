@@ -1,0 +1,52 @@
+app-movie-info {
+  margin: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.view-more {
+  display: flex;
+  justify-content: right;
+}
+
+.btn {
+  background-color: #1E88E5;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: right;
+}
+
+.btn:hover {
+  background-color: #1565C0;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  background-color: #0D47A1;
+  transform: scale(0.98);
+}
+
+.not-authenticated {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  font-size: 24px;
+  color: #c6c6c6;
+  font-weight: bold;
+}
+
+.login-message {
+  font-size: 18px;
+  color: #cccccc;
+  font-weight: 500;
+}
