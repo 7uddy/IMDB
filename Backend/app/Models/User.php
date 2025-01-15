@@ -32,4 +32,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

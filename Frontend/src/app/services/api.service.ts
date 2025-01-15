@@ -42,5 +42,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/review`, reviewData,{withCredentials:true});
   }
 
+  hasReview(movieId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/review/${movieId}`, { withCredentials: true });
+  }
+
+
 
 }

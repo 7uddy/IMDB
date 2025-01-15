@@ -6,7 +6,12 @@
 
   <app-movie-info [movie]="movie">
     <div class="make-review">
-      <button class="btn" *ngIf="authenticated" (click)="goToReview()">Make a Review</button>
+      <div *ngIf="userRating !==0">
+        <p>Your Rating: {{ userRating }}</p>
+      </div>
+      <div *ngIf="userRating === 0">
+        <button class="btn" *ngIf="authenticated" (click)="goToReview()">Make a Review</button>
+      </div>
     </div>
   </app-movie-info>
 </div>

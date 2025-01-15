@@ -14,7 +14,7 @@ class ReviewController extends Controller
     {
         $request->merge(['user_id' => Auth::user()->id]);
 
-        $validated=$request->validate([
+        $validated = $request->validate([
             'movie_id' => 'required|string',
             'movie_title' => 'required|string',
             'poster_path' => 'required|string',
@@ -32,6 +32,17 @@ class ReviewController extends Controller
             'review_text' => $validated['review_text'],
         ]);
 
-        return response()->json($review,Response::HTTP_CREATED);
+        return response()->json($review, Response::HTTP_CREATED);
+    }
+
+    public function hasUserReviewedMovie(Request $request,$movie_id)
+    {
+        $user_id = Auth::user()->id;
+
+        $review = Review::where('user_id', $user_id)
+            ->where('movie_id', $movie_id)
+            ->first();
+
+        return response()->json($review, Response::HTTP_OK);
     }
 }

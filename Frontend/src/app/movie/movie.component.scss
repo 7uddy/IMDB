@@ -79,3 +79,17 @@ app-movie-info {
 .btn:focus {
   outline: none;
 }
+
+p {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px;
+}
+
+p::after {
+  content: '⭐';
+  margin-left: 2px;
+  color: #ffcc00;
+  font-size: 18px;
+}
+
