@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class MovieController extends Controller
 {
@@ -18,151 +19,109 @@ class MovieController extends Controller
         ]);
     }
 
+    protected function makeApiCall($endpoint, $params = [])
+    {
+        try {
+            $response = $this->client->get($endpoint, [
+                'headers' => [
+                    'Authorization' => config('tmdb.api_key'),
+                ],
+                'query' => array_merge([
+                    'language' => config('tmdb.language'),
+                ], $params),
+            ]);
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            Log::error('API Request failed: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    protected function limitMovies($movies, $limit)
+    {
+        return array_slice($movies, 0, $limit);
+    }
+
     public function getTrendingMovies(Request $request)
     {
-        $response = $this->client->get('movie/popular', [
-            'headers' => [
-                'Authorization' => config('tmdb.api_key'),
-            ],
-            'query' => [
-                'language' => config('tmdb.language'),
-                'page' => 1,
-            ],
-        ]);
-        $movies = json_decode($response->getBody(), true)['results'];
-
+        $movies = $this->makeApiCall('movie/popular');
         $limit = $request->header('X-Number-Of-Movies', 20);
+        $limitedMovies = $this->limitMovies($movies['results'], $limit);
 
-        $limitedMovies = array_slice($movies, 0, $limit);
-
-        return response()->json($limitedMovies);
+        return response()->json($limitedMovies, Response::HTTP_OK);
     }
 
     public function getTopRatedMovies(Request $request)
     {
-        $response = $this->client->get('movie/top_rated', [
-            'headers' => [
-                'Authorization' => config('tmdb.api_key'),
-            ],
-            'query' => [
-                'language' => config('tmdb.language'),
-                'page' => 1,
-            ],
-        ]);
-        $movies = json_decode($response->getBody(), true)['results'];
-
+        $movies = $this->makeApiCall('movie/top_rated');
         $limit = $request->header('X-Number-Of-Movies', 20);
+        $limitedMovies = $this->limitMovies($movies['results'], $limit);
 
-        $limitedMovies = array_slice($movies, 0, $limit);
-
-        return response()->json($limitedMovies);
+        return response()->json($limitedMovies, Response::HTTP_OK);
     }
 
     public function getMovieDetails($id)
     {
-        $response = $this->client->get("movie/{$id}", [
-            'headers' => [
-                'Authorization' => config('tmdb.api_key'),
-            ],
-            'query' => [
-                'language' => config('tmdb.language'),
-            ],
-        ]);
-        $movie = json_decode($response->getBody(), true);
+        $movie = $this->makeApiCall("movie/{$id}");
 
-        return response()->json($movie);
+        return response()->json($movie, Response::HTTP_OK);
     }
 
     public function getMoviesByPage($page)
     {
-        $response = $this->client->get('movie/now_playing', [
-            'headers' => [
-                'Authorization' => config('tmdb.api_key'),
-            ],
-            'query' => [
-                'language' => config('tmdb.language'),
-                'page' => $page,
-            ],
-        ]);
-        $movies = json_decode($response->getBody(), true)['results'];
+        $movies = $this->makeApiCall('movie/now_playing', ['page' => $page]);
 
-        return response()->json($movies);
+        return response()->json($movies['results']);
     }
 
     public function searchMovieByText($page, $search)
     {
-        $response = $this->client->get('search/movie', [
-            'headers' => [
-                'Authorization' => config('tmdb.api_key'),
-            ],
-            'query' => [
-                'language' => config('tmdb.language'),
-                'page' => $page,
-                'query' => $search,
-            ],
+        $movies = $this->makeApiCall('search/movie', [
+            'page' => $page,
+            'query' => $search,
         ]);
-        $movies = json_decode($response->getBody(), true)['results'];
 
-        return response()->json($movies);
+        return response()->json($movies['results'], Response::HTTP_OK);
     }
 
-    public function getMoviesByGenreWithSort($page, $genre,$sort)
+    public function getMoviesByGenreWithSort($page, $genre, $sort)
     {
-        switch (strtolower($sort)) {
-            case 'year_desc':
-                $sort = 'primary_release_date.desc';
-                break;
-            case 'year_asc':
-                $sort = 'primary_release_date.asc';
-                break;
-            case 'title_asc':
-                $sort = 'title.asc';
-                break;
-            case 'title_desc':
-                $sort = 'title.desc';
-                break;
-            default:
-                $sort = 'popularity.desc';
-                break;
-        }
+        $genreId = $this->getGenreId($genre);
 
-        switch (strtolower($genre)){
-            case 'action':
-                $genre = 28;
-                break;
-            case 'comedy':
-                $genre = 35;
-                break;
-            case 'drama':
-                $genre = 18;
-                break;
-            case 'horror':
-                $genre = 27;
-                break;
-            case 'sci_fi':
-                $genre = 878;
-                break;
-            case 'fantasy':
-                $genre = 14;
-                break;
-            default:
-                $genre = 28;
-                break;
-        }
+        $sortOption = $this->getSortOption($sort);
 
-        $response = $this->client->get('discover/movie', [
-            'headers' => [
-                'Authorization' => config('tmdb.api_key'),
-            ],
-            'query' => [
-                'language' => config('tmdb.language'),
-                'page' => $page,
-                'sort_by' => $sort,
-                'with_genres' => $genre,
-            ],
+        $movies = $this->makeApiCall('discover/movie', [
+            'page' => $page,
+            'sort_by' => $sortOption,
+            'with_genres' => $genreId,
         ]);
-        $movies = json_decode($response->getBody(), true)['results'];
 
-        return response()->json($movies);
+        return response()->json($movies['results'], Response::HTTP_OK);
+    }
+
+    protected function getGenreId($genre)
+    {
+        $genres = [
+            'action' => 28,
+            'comedy' => 35,
+            'drama' => 18,
+            'horror' => 27,
+            'sci_fi' => 878,
+            'fantasy' => 14,
+        ];
+
+        return $genres[strtolower($genre)] ?? 28;
+    }
+
+    protected function getSortOption($sort)
+    {
+        $sortOptions = [
+            'year_desc' => 'primary_release_date.desc',
+            'year_asc' => 'primary_release_date.asc',
+            'title_asc' => 'title.asc',
+            'title_desc' => 'title.desc',
+        ];
+
+        return $sortOptions[strtolower($sort)] ?? 'popularity.desc';
     }
 }

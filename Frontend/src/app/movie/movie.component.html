@@ -4,5 +4,9 @@
     <img src="https://image.tmdb.org/t/p/original{{movie.backdrop_path}}" alt="Movie Banner" />
   </div>
 
-  <app-movie-info [movie]="movie"></app-movie-info>
+  <app-movie-info [movie]="movie">
+    <div class="make-review">
+      <button class="btn" *ngIf="authenticated" (click)="goToReview()">Make a Review</button>
+    </div>
+  </app-movie-info>
 </div>

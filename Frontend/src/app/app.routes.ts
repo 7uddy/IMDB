@@ -5,14 +5,16 @@ import { ChatComponent } from './chat/chat.component';
 import { MovieComponent } from './movie/movie.component';
 import { RegisterComponent } from './register/register.component';
 import { FilmsComponent } from './films/films.component';
+import { ReviewComponent } from './review/review.component';
 
 export const routes: Routes = [
-  {path:'',redirectTo:'login',pathMatch:'full'},
+  {path:'',redirectTo:'home',pathMatch:'full'},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'home',component:HomeComponent},
   {path:'chat',component:ChatComponent},
   {path:'films',component:FilmsComponent},
   {path:'movie/:id',component:MovieComponent},
-  {path:"**",component:LoginComponent}
+  {path:'movie/:id/review',component:ReviewComponent},
+  {path:"**",component:HomeComponent}
 ];

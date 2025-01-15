@@ -50,3 +50,32 @@ app-movie-info {
     align-items: center;
   }
 }
+.make-review {
+  text-align: right;
+}
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #37853b;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  background-color: #3e8e41;
+  transform: translateY(2px);
+}
+
+.btn:focus {
+  outline: none;
+}

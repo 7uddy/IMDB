@@ -1,0 +1,30 @@
+<app-header></app-header>
+<div class="review-container">
+  <div class="review-left">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + posterImagePath" alt="Movie Poster" class="movie-poster">
+  </div>
+
+  <div class="review-right">
+    <h2>{{ movie?.title }}</h2>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+      <div class="star-rating">
+        <label *ngFor="let star of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
+          <input type="radio" [formControlName]="'rating'" [value]="star">
+          <span class="star" [ngClass]="{'filled': star <= reviewForm.value.rating}">★</span>
+        </label>
+      </div>
+
+      <textarea formControlName="reviewText" placeholder="Write your review here..." rows="4"></textarea>
+
+      <div class="review-actions">
+        <button (click)="cancelReview()" type="button" class="btn btn-cancel">Cancel</button>
+        <button type="submit" [disabled]="reviewForm.invalid" class="btn btn-submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

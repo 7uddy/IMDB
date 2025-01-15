@@ -38,5 +38,9 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/movies/page/${page}/genre/${genre}/sort/${sort}`);
   }
 
+  addReview(reviewData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/review`, reviewData,{withCredentials:true});
+  }
+
 
 }
