@@ -8,6 +8,8 @@
     <div class="make-review">
       <div *ngIf="userRating !==0">
         <p>Your Rating: {{ userRating }}</p>
+        <button id="delete" class="btn" *ngIf="authenticated" (click)="deleteReview()">Delete Review</button>
+        <button id="edit" class="btn" *ngIf="authenticated" (click)="editReview()">Edit Review</button>
       </div>
       <div *ngIf="userRating === 0">
         <button class="btn" *ngIf="authenticated" (click)="goToReview()">Make a Review</button>

@@ -7,9 +7,20 @@ app-movie-info {
   justify-content: center;
 }
 
-.view-more {
+.button-container {
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.changes {
+  display: flex;
+  gap: 10px;
+}
+
+.view-more {
+  margin-left: auto;
 }
 
 .btn {
@@ -21,17 +32,22 @@ app-movie-info {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  display: flex;
-  justify-content: right;
+}
+
+#edit {
+  background-color: #daa000;
+}
+
+#delete {
+  background-color: #ff0000;
 }
 
 .btn:hover {
-  background-color: #1565C0;
+  background-color: #495049 !important;
   transform: scale(1.05);
 }
 
 .btn:active {
-  background-color: #0D47A1;
   transform: scale(0.98);
 }
 

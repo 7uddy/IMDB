@@ -45,4 +45,13 @@ export class MovieComponent implements OnInit {
   goToReview() {
     this.router.navigate([`/movie/${this.id}/review`]);
   }
+
+  deleteReview() {
+    this.apiService.deleteReview(this.id).subscribe(() => {
+      this.userRating = 0;
+    });
+  }
+  editReview() {
+    this.router.navigate([`/movie/${this.id}/review`]);
+  }
 }

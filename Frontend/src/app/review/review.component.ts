@@ -34,6 +34,15 @@ export class ReviewComponent {
       this.movie = movie;
       this.posterImagePath = movie.poster_path;
     });
+
+    this.api.hasReview(this.movieId).subscribe((response: any) => {
+      if (response && response.rating) {
+        this.reviewForm.patchValue({
+          rating: response.rating,
+          reviewText: response.review_text
+        });
+      }
+    });
   }
 
   submitReview() {
@@ -66,6 +75,4 @@ export class ReviewComponent {
   cancelReview() {
     this.router.navigate([`/movie/${this.movieId}`]);
   }
-
-
 }

@@ -9,9 +9,10 @@ body {
 .movie-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: #1f1f1f;
+  min-height: 100vh;
 }
 
 .banner img {
@@ -20,7 +21,7 @@ body {
   width: 100%;
   height: auto;
   object-fit: cover;
-  margin-bottom: -28%;
+  margin-bottom: -425px;
 }
 
 app-movie-info {
@@ -29,7 +30,6 @@ app-movie-info {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  margin-top:-10px
 }
 
 .rating i {
@@ -50,9 +50,11 @@ app-movie-info {
     align-items: center;
   }
 }
+
 .make-review {
   text-align: right;
 }
+
 .btn {
   background-color: #4CAF50;
   color: white;
@@ -64,16 +66,24 @@ app-movie-info {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  margin:10px;
+}
+
+#edit {
+  background-color: #daa000;
+}
+
+#delete {
+  background-color: #ff0000;
 }
 
 .btn:hover {
-  background-color: #37853b;
-  transform: translateY(-2px);
+  background-color: #495049 !important;
+  transform: scale(1.05);
 }
 
 .btn:active {
-  background-color: #3e8e41;
-  transform: translateY(2px);
+  transform: scale(0.98);
 }
 
 .btn:focus {
@@ -92,4 +102,3 @@ p::after {
   color: #ffcc00;
   font-size: 18px;
 }
-

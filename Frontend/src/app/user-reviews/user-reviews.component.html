@@ -2,8 +2,14 @@
 <div class="is-authenticated" *ngIf="isAuthenticated">
   <div *ngFor="let review of reviews" class="movie-container">
     <app-movie-info [movie]="review">
-      <div class="view-more">
-        <button class="btn" (click)="goToMovie(review.movie_id)">View Movie</button>
+      <div class="button-container">
+        <div class="changes">
+          <button id="delete" class="btn" (click)="deleteReview(review.movie_id)">Delete</button>
+          <button id="edit" class="btn" (click)="editReview(review.movie_id)">Edit</button>
+        </div>
+        <div class="view-more">
+          <button class="btn" (click)="goToMovie(review.movie_id)">View Movie</button>
+        </div>
       </div>
     </app-movie-info>
   </div>

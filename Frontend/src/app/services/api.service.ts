@@ -49,4 +49,8 @@ export class ApiService {
   getUserReviews(): Observable<any> {
     return this.http.get(`${this.apiUrl}/allreviews`, { withCredentials: true });
   }
+
+  deleteReview(movieId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/review/delete/${movieId}`, { withCredentials: true });
+  }
 }

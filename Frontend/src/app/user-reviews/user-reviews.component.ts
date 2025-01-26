@@ -16,13 +16,17 @@ export class UserReviewsComponent {
   isAuthenticated: boolean = false;
   reviews: any[] = [];
 
-  constructor(private authState: AuthStateService, private api: ApiService,private router:Router) { }
+  constructor(private authState: AuthStateService, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.authState.getAuthState().subscribe(val => {
       this.isAuthenticated = val;
     });
 
+    this.getReviews();
+  }
+
+  getReviews() {
     this.api.getUserReviews().subscribe((data: any) => {
       this.reviews = Array.isArray(data) ? data.map(review => ({
         ...review,
@@ -37,4 +41,15 @@ export class UserReviewsComponent {
   goToMovie(id: string) {
     this.router.navigate([`/movie/${id}`]);
   }
+
+  deleteReview(id: string) {
+    this.api.deleteReview(id).subscribe(() => {
+      this.getReviews();
+    });
+  }
+
+  editReview(id: string) {
+    this.router.navigate([`/movie/${id}/review`]);
+  }
+
 }

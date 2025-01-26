@@ -26,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/review', [App\Http\Controllers\ReviewController::class, 'storeReview']);
     Route::get('/review/{movie_id}', [App\Http\Controllers\ReviewController::class, 'hasUserReviewedMovie']);
     Route::get('/allreviews', [App\Http\Controllers\ReviewController::class, 'getUserReviews']);
+    Route::delete('/review/delete/{movie_id}', [App\Http\Controllers\ReviewController::class, 'deleteReview']);
 });

@@ -55,4 +55,20 @@ class ReviewController extends Controller
 
         return response()->json($reviews, Response::HTTP_OK);
     }
+
+    public function deleteReview(Request $request,$movie_id)
+    {
+        $user_id = Auth::user()->id;
+
+        $review = Review::where('user_id', $user_id)
+            ->where('movie_id', $movie_id)
+            ->first();
+
+        if($review){
+            $review->delete();
+            return response()->json(null, Response::HTTP_NO_CONTENT);
+        }
+
+        return response()->json(null, Response::HTTP_NOT_FOUND);
+    }
 }

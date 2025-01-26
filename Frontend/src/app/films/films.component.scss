@@ -1,7 +1,6 @@
 /* General container styling */
 .base-container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   border-radius: 10px;
@@ -82,14 +81,14 @@ select:focus {
 .film-poster-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 65px;
   justify-content: center;
 }
 
 /* Individual film poster styling (example) */
 .film-poster {
-  width: 200px;
-  height: 300px;
+  width: 300px;
+  height: 400px;
   background-color: #e0e0e0;
   border-radius: 10px;
   margin-bottom: 50px;
@@ -165,7 +164,7 @@ select:focus {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .pagination-btn {

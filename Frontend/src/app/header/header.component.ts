@@ -18,8 +18,15 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private auth: AuthService,private authState:AuthStateService) { }
 
   ngOnInit(): void {
-    this.authState.getAuthState().subscribe((auth) => {
-      this.authenticated = auth;
+    this.auth.getUser().subscribe({
+      next: (user) => {
+        Emitters.authEmitter.emit(true);
+        this.authenticated = true;
+      },
+      error: (error) => {
+        Emitters.authEmitter.emit(false);
+        this.authenticated = false;
+      }
     });
   }
 

@@ -24,16 +24,6 @@ export class HomeComponent implements OnInit {
   constructor(private apiService:ApiService,private auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
-
-    this.auth.getUser().subscribe({
-      next: (user) => {
-        Emitters.authEmitter.emit(true);
-      },
-      error: (error) => {
-        Emitters.authEmitter.emit(false);
-      }
-    });
-
     this.trendingMovies = this.apiService.getPopularMovies();
     this.topRated = this.apiService.getTopRatedMovies();
   }
