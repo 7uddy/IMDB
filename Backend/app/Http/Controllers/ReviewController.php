@@ -23,6 +23,19 @@ class ReviewController extends Controller
             'review_text' => 'required|string',
         ]);
 
+        $review = Review::where('user_id', $validated['user_id'])
+            ->where('movie_id', $validated['movie_id'])
+            ->first();
+
+        if($review){
+            $review->update([
+                'rating' => $validated['rating'],
+                'review_text' => $validated['review_text'],
+            ]);
+
+            return response()->json($review, Response::HTTP_OK);
+        }
+
         $review = Review::create([
             'movie_id' => $validated['movie_id'],
             'movie_title' => $validated['movie_title'],
