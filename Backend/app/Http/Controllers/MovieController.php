@@ -64,12 +64,20 @@ class MovieController extends Controller
     {
         $movie = $this->makeApiCall("movie/{$id}");
 
+        if (!$movie) {
+            return response()->json(['error' => 'Movie not found'], Response::HTTP_NOT_FOUND);
+        }
+
         return response()->json($movie, Response::HTTP_OK);
     }
 
     public function getMoviesByPage($page)
     {
         $movies = $this->makeApiCall('movie/now_playing', ['page' => $page]);
+
+        if (!$movies) {
+            return response()->json(['error' => 'No movies found'], Response::HTTP_NOT_FOUND);
+        }
 
         return response()->json($movies['results']);
     }
@@ -80,6 +88,10 @@ class MovieController extends Controller
             'page' => $page,
             'query' => $search,
         ]);
+
+        if(!$movies) {
+            return response()->json(['error' => 'No movies found'], Response::HTTP_NOT_FOUND);
+        }
 
         return response()->json($movies['results'], Response::HTTP_OK);
     }
@@ -95,6 +107,10 @@ class MovieController extends Controller
             'sort_by' => $sortOption,
             'with_genres' => $genreId,
         ]);
+
+        if (!$movies) {
+            return response()->json(['error' => 'No movies found'], Response::HTTP_NOT_FOUND);
+        }
 
         return response()->json($movies['results'], Response::HTTP_OK);
     }

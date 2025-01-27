@@ -94,4 +94,14 @@ app-movie-info {
   100% {
     transform: rotate(360deg);
   }
-} 
+}
+
+.no-reviews {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25vh;
+  font-size: 24px;
+  color: #7e7e7e;
+  font-weight: bold;
+}

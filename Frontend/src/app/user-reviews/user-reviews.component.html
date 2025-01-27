@@ -20,3 +20,7 @@
 <div *ngIf="!isLoaded" class="loading-spinner">
   <span class="loader"></span>
 </div>
+
+<div class="no-reviews" *ngIf="isLoaded && isAuthenticated && reviews.length === 0">
+  <p>You have not reviewed any movies yet.</p>
+</div>
