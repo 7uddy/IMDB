@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="review-container" *ngIf="isAuthenticated">
+<div class="review-container" *ngIf="isAuthenticated && isLoaded">
   <div class="review-left">
     <img [src]="'https://image.tmdb.org/t/p/w500' + posterImagePath" alt="Movie Poster" class="movie-poster">
   </div>
@@ -29,6 +29,10 @@
   </div>
 </div>
 
-<div *ngIf="!isAuthenticated" class="not-authenticated">
+<div *ngIf="!isAuthenticated && isLoaded" class="not-authenticated">
   <p>Please log in to make a review.</p>
+</div>
+
+<div *ngIf="!isLoaded" class="loading-spinner">
+  <span class="loader"></span>
 </div>

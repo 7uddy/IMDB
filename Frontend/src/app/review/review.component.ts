@@ -14,6 +14,7 @@ import { AuthStateService } from '../services/auth-state.service';
 })
 export class ReviewComponent {
   isAuthenticated: boolean = false;
+  isLoaded: boolean = false;
   movie: any;
   posterImagePath: string = '';
   movieId: any;
@@ -38,6 +39,7 @@ export class ReviewComponent {
     this.api.getMovieByID(this.movieId).subscribe((movie) => {
       this.movie = movie;
       this.posterImagePath = movie.poster_path;
+      this.isLoaded = true;
     });
 
     this.api.hasReview(this.movieId).subscribe((response: any) => {

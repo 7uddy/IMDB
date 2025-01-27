@@ -28,7 +28,7 @@ test.describe('Login Page', () => {
 
     await expect(page).toHaveURL('http://localhost:4200/home');
 
-    const navbar = await page.locator('nav.navbar');
+    const navbar = await page.locator('div.topnav');
     await expect(navbar).toBeVisible();
   });
 
