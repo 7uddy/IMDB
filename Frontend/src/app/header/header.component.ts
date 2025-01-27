@@ -38,6 +38,7 @@ export class HeaderComponent implements OnInit {
       next: (data) => {
         this.authenticated = false;
         Emitters.authEmitter.emit(false);
+        window.location.reload();
       },
       error: (error) => {
         if (error.error && error.error.error) {

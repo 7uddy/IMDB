@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ReviewController;
 
 // Authenticating the user
@@ -11,6 +10,8 @@ Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
 
 //About user
 Route::get('username/{id}', [App\Http\Controllers\UserController::class, 'getUsername']);
+Route::get("/user/{username}", [App\Http\Controllers\UserController::class, "getUserByName"]);
+Route::get("/user/{user_id}/reviews", [App\Http\Controllers\ReviewController::class, "getReviewsByUserId"]);
 
 // Movies
 Route::get('/movies/trending', [App\Http\Controllers\MovieController::class, 'getTrendingMovies']);
@@ -33,8 +34,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/reviews', [App\Http\Controllers\ReviewController::class, 'getUserReviews']);
     Route::delete('/review/delete/{movie_id}', [App\Http\Controllers\ReviewController::class, 'deleteReview']);
 });
-
-//Route::post("/send", [ChatController::class, "sendMessage"]);
 Route::get("/allreviews/{movie_id}", [ReviewController::class, "getReviewsByMovieId"]);
-Route::get("/user/{username}", [App\Http\Controllers\UserController::class, "getUserByName"]);
-Route::get("/user/{user_id}/reviews", [App\Http\Controllers\ReviewController::class, "getReviewsByUserId"]);
+
