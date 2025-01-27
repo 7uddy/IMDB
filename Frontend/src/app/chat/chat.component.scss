@@ -1,9 +1,10 @@
 .comment-item {
-  background-color: #37455a;
+  background-color: #2c2c2c;
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
 }
 
 .comment-username,
@@ -13,7 +14,6 @@
 }
 
 .comment-rating {
-  font-size: 1.2rem;
   color: #ff9800;
   margin-left: 10px; /* Space between username and rating */
 }
@@ -30,7 +30,11 @@
 .comment-content {
   margin-top: 10px;
   font-size: 1rem;
-  color: #000000;
+  color: #ccc;
   line-height: 1.5;
   font-weight: bold;
+}
+
+h2 {
+  margin-bottom: 30px;
 }

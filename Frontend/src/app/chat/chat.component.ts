@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { WebSocketService } from '../services/websocket.service';
-import { forkJoin, Subscription } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Pusher from 'pusher-js';
 import { ApiService } from '../services/api.service';
-import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 interface Review {
   username: string;
   rating: string;
@@ -15,64 +14,66 @@ interface Review {
 
 @Component({
   selector: 'app-chat',
-  imports: [ CommonModule,FormsModule ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
-  username = ''; // Numele utilizatorului
-  rating = ''; // Rating-ul filmului
-  review_text = ''; // Conținutul review-ului
-  reviews: Review[] = []; // Lista de review-uri
+export class ChatComponent implements OnInit, OnDestroy {
+  username = ''; // User's name
+  rating = ''; // Movie rating
+  review_text = ''; // Review text content
+  reviews: Review[] = []; // List of reviews
   pusherInstance: any;
   channel: any;
-  movieId: string=''; // ID-ul filmului curent
-  isLoading = true; // Variabila pentru loading
+  movieId: string = ''; // Current movie ID
+  isLoading = true; // Loading state
 
-
-  constructor(private api: ApiService, private route: ActivatedRoute) {}
+  constructor(private api: ApiService, private route: ActivatedRoute,private router:Router) {}
 
   ngOnInit(): void {
-    this.movieId = '939243';
-    //this.route.snapshot.paramMap.get('id')!; // Obține ID-ul filmului din URL
+    this.movieId = this.route.snapshot.paramMap.get('id')!; // Get movie ID from URL
 
+    // Fetch reviews from the API
     this.api.getAllUsersReviews(this.movieId).subscribe(
       (reviews: any[]) => {
-        // Obține toate user_id-urile din review-uri
+        // Get all user IDs from the reviews
         const userRequests = reviews.map((review) =>
           this.api.getUsername(review.user_id)
         );
 
-        // Folosim forkJoin pentru a obține username-urile în paralel
+        // Use forkJoin to fetch usernames in parallel
         forkJoin(userRequests).subscribe(
           (usernames: any) => {
-            // Combinați review-urile cu username-urile corespunzătoare
+            // Combine reviews with the corresponding usernames
             this.reviews = reviews.map((review, index) => ({
               ...review,
-              username: usernames[index].username, // Adaugă username-ul din răspunsul API
+              username: usernames[index].username, // Add the username from the API response
             }));
-            console.log('Review-urile filmului cu username-uri:', this.reviews);
+            console.log('Reviews with usernames:', this.reviews);
           },
           (error) => {
-            console.error('Eroare la obținerea username-urilor:', error);
+            console.error('Error fetching usernames:', error);
+          },
+          () => {
+            // Finally set loading to false after reviews and usernames are combined
+            this.isLoading = false;
           }
         );
-        this.isLoading = false; // Setează isLoading la false când datele sunt încărcate
       },
       (error: any) => {
-        console.error('Eroare la obținerea review-urilor:', error);
-        this.isLoading = false; // Setează isLoading la false când datele sunt încărcate
+        console.error('Error fetching reviews:', error);
+        this.isLoading = false; // Set loading state to false in case of error
       }
     );
 
-    // Conectează-te la canalul Pusher dedicat filmului
+    // Connect to Pusher channel for the movie
     this.pusherInstance = new Pusher('3e4c49a8b24aa3eaf880', {
       cluster: 'eu',
     });
 
     this.channel = this.pusherInstance.subscribe(`film.${this.movieId}`);
 
-    // Ascultă evenimentul de review adăugat
+    // Listen for new reviews being added in real-time
     this.channel.bind('review.added', (data: any) => {
       console.log(data);
       this.reviews.push({
@@ -84,7 +85,11 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    // Unsubscribe from the Pusher channel when the component is destroyed
     this.pusherInstance.unsubscribe(`film.${this.movieId}`);
   }
-}
 
+  goToUserProfile(){
+    this.router.navigate(['/user/'+this.username]);
+  }
+}

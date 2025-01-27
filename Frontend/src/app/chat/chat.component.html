@@ -4,17 +4,18 @@
   <div *ngIf="isLoading" class="loading-message">
     <p>Loading reviews...</p>
   </div>
-
-  <!-- Afișează recenziile -->
-  <div *ngIf="reviews.length > 0; else noReviews">
-    <div *ngFor="let review of reviews" class="comment-item">
-      <p class="comment-username">{{ review.username }}</p>
-      <p class="comment-rating">⭐{{ review.rating }}</p>
-      <p class="comment-content">{{ review.review_text }}</p>
+  <div class="comment-form" *ngIf="!isLoading">
+    <!-- Afișează recenziile -->
+    <div *ngIf="reviews.length > 0; else noReviews">
+      <div *ngFor="let review of reviews" class="comment-item">
+        <p class="comment-username" (click)="goToUserProfile()" >{{ review.username }}</p>
+        <p class="comment-rating">⭐{{ review.rating }}</p>
+        <p class="comment-content">{{ review.review_text }}</p>
+      </div>
     </div>
-  </div>
 
-  <ng-template #noReviews>
-    <p *ngIf="!isLoading">There are no reviews for this movie.</p>
-  </ng-template>
+    <ng-template #noReviews>
+      <p>There are no reviews for this movie.</p>
+    </ng-template>
+  </div>
 </div>

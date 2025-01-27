@@ -5,10 +5,11 @@ import { ApiService } from '../services/api.service';
 import { CommonModule } from '@angular/common';
 import { MovieInfoComponent } from "../movie-info/movie-info.component";
 import { AuthStateService } from '../services/auth-state.service';
+import { ChatComponent } from "../chat/chat.component";
 
 @Component({
   selector: 'app-movie',
-  imports: [HeaderComponent, CommonModule, MovieInfoComponent],
+  imports: [HeaderComponent, CommonModule, MovieInfoComponent, ChatComponent],
   templateUrl: './movie.component.html',
   styleUrl: './movie.component.scss'
 })

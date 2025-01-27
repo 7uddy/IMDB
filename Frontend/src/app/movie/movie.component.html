@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="movie-container">
+<div class="movie-container" *ngIf="movie">
   <div class="banner">
     <img src="https://image.tmdb.org/t/p/original{{movie.backdrop_path}}" alt="Movie Banner" />
   </div>
@@ -16,4 +16,10 @@
       </div>
     </div>
   </app-movie-info>
+  <app-chat></app-chat>
 </div>
+
+<div *ngIf="!movie" class="loading-spinner">
+  <span class="loader"></span>
+</div>
+

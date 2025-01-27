@@ -1,4 +1,4 @@
-<div class="movie-info">
+<div class="movie-info" *ngIf="movie">
   <div class="left">
     <img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" alt="{{movie.title}}" class="main-image" />
   </div>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="movie-info-container">
-      <ng-content></ng-content> 
+      <ng-content></ng-content>
     </div>
   </div>
 </div>

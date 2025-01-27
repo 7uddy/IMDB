@@ -57,7 +57,7 @@
   margin-top: 50px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .all-movies {
     padding: 20px 15px;
   }
@@ -76,8 +76,4 @@
   }
 }
 
-@media (max-width: 480px) {
-  .movie {
-    width: 90%;
-  }
-}
+

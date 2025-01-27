@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { RatingComponent } from "../rating/rating.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movie-info',
-  imports: [RatingComponent],
+  imports: [RatingComponent, CommonModule],
   templateUrl: './movie-info.component.html',
   styleUrl: './movie-info.component.scss'
 })

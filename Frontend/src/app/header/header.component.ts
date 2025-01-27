@@ -15,6 +15,7 @@ import { AuthStateService } from '../services/auth-state.service';
 export class HeaderComponent implements OnInit {
 
   authenticated: boolean = false;
+  isLoaded: boolean = false;
   constructor(private router: Router, private auth: AuthService,private authState:AuthStateService) { }
 
   ngOnInit(): void {
@@ -22,10 +23,12 @@ export class HeaderComponent implements OnInit {
       next: (user) => {
         Emitters.authEmitter.emit(true);
         this.authenticated = true;
+        this.isLoaded = true;
       },
       error: (error) => {
         Emitters.authEmitter.emit(false);
         this.authenticated = false;
+        this.isLoaded = true;
       }
     });
   }
