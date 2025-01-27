@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="base-container">
+<div class="base-container" *ngIf="isLoaded">
   <div>
     <div class="film-list">
       <div class="filter-container">
@@ -27,23 +27,11 @@
         </select>
       </div>
 
-      <ng-template #loading>
-        <div class="loading">
-          <p>Loading movies...</p>
+      <div class="film-poster-list" id="film-poster-list">
+        <div class="film-poster" *ngFor="let movie of filteredMovies">
+          <app-movie-poster [movie]="movie"></app-movie-poster>
         </div>
-      </ng-template>
-
-      <div *ngIf="isLoading; else movieList">
-        <ng-container *ngTemplateOutlet="loading"></ng-container>
       </div>
-
-      <ng-template #movieList>
-        <div class="film-poster-list" id="film-poster-list">
-          <div class="film-poster" *ngFor="let movie of filteredMovies">
-            <app-movie-poster [movie]="movie"></app-movie-poster>
-          </div>
-        </div>
-      </ng-template>
 
       <div class="pagination">
         <button (click)="goToPreviousPage()" [disabled]="page === 1" class="pagination-btn">
@@ -56,4 +44,7 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="!isLoaded" class="loading-spinner">
+  <span class="loader"></span>
 </div>

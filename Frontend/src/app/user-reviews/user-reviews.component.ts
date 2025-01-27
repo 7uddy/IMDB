@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class UserReviewsComponent {
   isAuthenticated: boolean = false;
+  isLoaded:boolean = false;
   reviews: any[] = [];
 
   constructor(private authState: AuthStateService, private api: ApiService, private router: Router) { }
@@ -21,9 +22,9 @@ export class UserReviewsComponent {
   ngOnInit(): void {
     this.authState.getAuthState().subscribe(val => {
       this.isAuthenticated = val;
+      if(this.isAuthenticated) this.getReviews();
+      else this.isLoaded = true;
     });
-
-    this.getReviews();
   }
 
   getReviews() {
@@ -35,6 +36,7 @@ export class UserReviewsComponent {
         overview: review.review_text,
         vote_average: review.rating,
       })) : [];
+      this.isLoaded = true;
     });
   }
 

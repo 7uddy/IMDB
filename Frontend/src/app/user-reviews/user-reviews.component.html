@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="is-authenticated" *ngIf="isAuthenticated">
+<div class="is-authenticated" *ngIf="isLoaded && isAuthenticated">
   <div *ngFor="let review of reviews" class="movie-container">
     <app-movie-info [movie]="review">
       <div class="button-container">
@@ -14,6 +14,9 @@
     </app-movie-info>
   </div>
 </div>
-<div class="not-authenticated" *ngIf="!isAuthenticated">
+<div class="not-authenticated" *ngIf="isLoaded && !isAuthenticated">
   <p class="login-message">Please log in to view your reviews.</p>
+</div>
+<div *ngIf="!isLoaded" class="loading-spinner">
+  <span class="loader"></span>
 </div>

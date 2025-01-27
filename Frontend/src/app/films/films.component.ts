@@ -26,7 +26,7 @@ export class FilmsComponent implements OnInit {
   filteredMovies: Movie[] = [];
   searchText: string = '';
   searchSubject: Subject<string> = new Subject();
-  isLoading: boolean = true;
+  isLoaded: boolean = false;
 
   selectedGenre: string = 'all';
   selectedSort: string = '';
@@ -46,10 +46,10 @@ export class FilmsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
+    this.isLoaded = false;
     this.fetchMovies().subscribe(movies => {
       this.filteredMovies = movies;
-      this.isLoading = false;
+      this.isLoaded = true;
       this.updateHasNextPage();
     });
   }

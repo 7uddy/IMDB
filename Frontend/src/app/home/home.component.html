@@ -1,31 +1,40 @@
 <app-header></app-header>
-<div class="home-container">
-  <div class="all-movies">
+
+<div class="home-container" *ngIf="(trendingMovies | async) as trending">
+  <div class="all-movies" *ngIf="(topRated | async) as ratedMovies; else loading">
+
+    <!-- Trending Movies Section -->
     <div class="trending">
       <div class="top">
         <h4>Trending Movies</h4>
       </div>
-      <div *ngIf="trendingMovies | async as movies; else loading">
+      <div>
         <div class="movies-thumbnail">
-          <div class="movie" *ngFor="let movie of movies">
+          <div class="movie" *ngFor="let movie of trending">
             <app-movie-poster [movie]="movie"></app-movie-poster>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Top Rated Movies Section -->
     <div class="popular-movies">
       <div class="top">
         <h4>Top rated</h4>
       </div>
-      <div *ngIf="topRated | async as movies; else loading">
+      <div>
         <div class="movies-thumbnail">
-          <div class="movie" *ngFor="let movie of movies">
+          <div class="movie" *ngFor="let movie of ratedMovies">
             <app-movie-poster [movie]="movie"></app-movie-poster>
           </div>
         </div>
       </div>
-      <ng-template #loading>
-        <div class="loading">
-          <p>Loading movies...</p>
-        </div>
-      </ng-template>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-spinner">
+    <span class="loader"></span>
+  </div>
+</ng-template>
