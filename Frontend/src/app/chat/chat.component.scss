@@ -28,13 +28,26 @@
 }
 
 .comment-content {
-  margin-top: 10px;
-  font-size: 1rem;
-  color: #ccc;
+  font-size: 1.2rem;
+  color: #e4e4e4;
   line-height: 1.5;
   font-weight: bold;
 }
 
 h2 {
   margin-bottom: 30px;
+}
+
+.comment-username {
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: bolder;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.comment-username:hover {
+  color: #ffd000;
+  text-decoration: underline;
 }

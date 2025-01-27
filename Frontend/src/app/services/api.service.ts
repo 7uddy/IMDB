@@ -65,4 +65,12 @@ export class ApiService {
   getUsername(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/username/${id}`);
   }
+
+  getUserByName(username: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user/${username}`);
+  }
+
+  getAnotherUserReviews(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user/${userId}/reviews`);
+  }
 }

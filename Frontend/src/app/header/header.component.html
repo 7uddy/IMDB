@@ -1,11 +1,11 @@
 <div class="topnav" *ngIf="isLoaded">
   <a class="logo-container">
-    <img (click)="goTo('home')"class="nav-logo" src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg" alt="Logo">
+    <img (click)="goTo('home')" class="nav-logo" src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg" alt="Logo">
   </a>
   <div class="nav-items">
-    <a (click)="goTo('home')" class="nav-item">HOME</a>
-    <a (click)="goTo('films')" class="nav-item">FILMS</a>
-    <a (click)="goTo('reviews')" class="nav-item">MY REVIEWS</a>
+    <a routerLink="/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="nav-item">HOME</a>
+    <a routerLink="/films" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="nav-item">FILMS</a>
+    <a routerLink="/reviews" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="nav-item">MY REVIEWS</a>
   </div>
   <div class="logout-container" *ngIf="authenticated">
       <a (click)='logout()'class="logout-btn">LOGOUT</a>

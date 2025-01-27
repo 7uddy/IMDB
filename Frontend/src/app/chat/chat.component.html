@@ -8,7 +8,7 @@
     <!-- Afișează recenziile -->
     <div *ngIf="reviews.length > 0; else noReviews">
       <div *ngFor="let review of reviews" class="comment-item">
-        <p class="comment-username" (click)="goToUserProfile()" >{{ review.username }}</p>
+        <p class="comment-username" (click)="goToUserProfile(review)" >{{ review.username }}</p>
         <p class="comment-rating">⭐{{ review.rating }}</p>
         <p class="comment-content">{{ review.review_text }}</p>
       </div>

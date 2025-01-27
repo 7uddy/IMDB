@@ -34,5 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/review/delete/{movie_id}', [App\Http\Controllers\ReviewController::class, 'deleteReview']);
 });
 
-Route::post("/send", [ChatController::class, "sendMessage"]);
+//Route::post("/send", [ChatController::class, "sendMessage"]);
 Route::get("/allreviews/{movie_id}", [ReviewController::class, "getReviewsByMovieId"]);
+Route::get("/user/{username}", [App\Http\Controllers\UserController::class, "getUserByName"]);
+Route::get("/user/{user_id}/reviews", [App\Http\Controllers\ReviewController::class, "getReviewsByUserId"]);

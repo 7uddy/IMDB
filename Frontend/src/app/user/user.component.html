@@ -1,0 +1,39 @@
+<app-header></app-header>
+<div class="profile" *ngIf="isLoaded; else loading">
+  <!-- Profile Information -->
+  <div class="profile-info">
+    <div class="profile-image">
+      <img
+        src="https://freesvg.org/img/abstract-user-flat-4.png"
+        alt="Profile Picture"
+        class="profile-picture"
+      />
+    </div>
+    <div class="profile-details">
+      <h1 class="user-name">{{ user.user.name }}</h1>
+      <h3 class="member-since">Member since {{ user.user.created_at | date:'yyyy' }}</h3>
+      <p class="user-email">{{ user.user.email }}</p>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="reviews">
+    <p>User's Ratings</p>
+    <ng-container *ngFor="let review of reviews">
+      <div class="movie-container">
+        <app-movie-info [movie]="review">
+          <div class="button-container">
+            <button class="btn view-more" (click)="goToMovie(review.movie_id)">View Movie</button>
+          </div>
+        </app-movie-info>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Loading State -->
+<ng-template #loading>
+  <div class="loading-spinner">
+    <span class="loader"></span>
+  </div>
+</ng-template>

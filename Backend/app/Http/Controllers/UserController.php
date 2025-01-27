@@ -37,4 +37,18 @@ class UserController extends Controller
         }
     }
 
+    public function getUserByName($username)
+    {
+        $user = User::where('name', $username)->first();
+        if ($user) {
+            return response()->json([
+                'user' => $user
+            ], Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'message' => 'User not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+    }
+
 }

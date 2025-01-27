@@ -89,7 +89,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.pusherInstance.unsubscribe(`film.${this.movieId}`);
   }
 
-  goToUserProfile(){
-    this.router.navigate(['/user/'+this.username]);
+  goToUserProfile(review: Review) {
+    this.router.navigate(['/user/'+review.username]);
   }
 }

@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { FilmsComponent } from './films/films.component';
 import { ReviewComponent } from './review/review.component';
 import { UserReviewsComponent } from './user-reviews/user-reviews.component';
+import { UserComponent } from './user/user.component';
 
 export const routes: Routes = [
   {path:'',redirectTo:'home',pathMatch:'full'},
@@ -17,5 +18,6 @@ export const routes: Routes = [
   {path:'movie/:id',component:MovieComponent},
   {path:'movie/:id/review',component:ReviewComponent},
   {path:'reviews',component:UserReviewsComponent},
+  {path:'user/:username',component:UserComponent},
   {path:"**",component:HomeComponent}
 ];

@@ -1,0 +1,143 @@
+/* Profile */
+.profile {
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  margin-left: 250px;
+  gap: 1.5rem;
+}
+
+.profile-image {
+  flex-shrink: 0;
+}
+
+.profile-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffd000;
+}
+
+.profile-details h1.user-name {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+  color: white;
+  font-weight: bold;
+}
+
+.profile-details h3.member-since {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin: 0;
+}
+
+.profile-details p.user-email {
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 0.5rem;
+}
+
+/* Reviews Section */
+.reviews {
+  margin-top: 2rem;
+}
+
+.reviews p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  padding: 0.5rem 0;
+  text-align: center;
+  border-bottom: 2px solid #ffd000;
+  width: fit-content;
+  margin: 0 auto 1rem;
+}
+
+.movie-container {
+  margin-bottom: 1.5rem;
+}
+
+app-movie-info {
+  margin: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.changes {
+  display: flex;
+  gap: 10px;
+}
+
+.view-more {
+  margin-left: auto;
+}
+
+.btn {
+  background-color: #1E88E5;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #495049;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #FFF;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

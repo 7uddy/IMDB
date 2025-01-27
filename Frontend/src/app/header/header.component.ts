@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Emitters } from '../emitters/emitters';
 import { CommonModule } from '@angular/common';
 import { AuthStateService } from '../services/auth-state.service';
@@ -8,7 +8,7 @@ import { AuthStateService } from '../services/auth-state.service';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
