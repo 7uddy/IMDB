@@ -19,7 +19,9 @@ class ChatMessageEvent implements ShouldBroadcastNow
      */
     public function __construct(
         public string $username,
-        public string $message
+        public string $rating,
+        public string $content,
+        public string $movieId
     )
     {
         //
@@ -32,11 +34,11 @@ class ChatMessageEvent implements ShouldBroadcastNow
      */
     public function broadcastOn(): array
     {
-        return ['chat'];
+        return [new Channel('film.' . $this->movieId)];
     }
 
     public function broadcastAs(): string
     {
-        return 'message';
+        return 'review.added';
     }
 }

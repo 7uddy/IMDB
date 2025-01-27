@@ -47,7 +47,7 @@ export class ApiService {
   }
 
   getUserReviews(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/allreviews`, { withCredentials: true });
+    return this.http.get(`${this.apiUrl}/reviews`, { withCredentials: true });
   }
 
   deleteReview(movieId: string): Observable<any> {
@@ -56,5 +56,13 @@ export class ApiService {
 
   sendMessage(username: string, message: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/send`, { username, message });
+  }
+
+  getAllUsersReviews(movieId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/allreviews/${movieId}`);
+  }
+
+  getUsername(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/username/${id}`);
   }
 }

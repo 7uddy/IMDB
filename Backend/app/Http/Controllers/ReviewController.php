@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Review;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Events\ChatMessageEvent;
 
 
 class ReviewController extends Controller
@@ -33,6 +34,13 @@ class ReviewController extends Controller
                 'review_text' => $validated['review_text'],
             ]);
 
+            event(new ChatMessageEvent(
+                Auth::user()->name,
+                $validated['rating'],
+                $validated['review_text'],
+                $validated['movie_id']
+            ));
+
             return response()->json($review, Response::HTTP_OK);
         }
 
@@ -44,6 +52,13 @@ class ReviewController extends Controller
             'rating' => $validated['rating'],
             'review_text' => $validated['review_text'],
         ]);
+
+        event(new ChatMessageEvent(
+            Auth::user()->name,
+            $validated['rating'],
+            $validated['review_text'],
+            $validated['movie_id']
+        ));
 
         return response()->json($review, Response::HTTP_CREATED);
     }
@@ -83,5 +98,13 @@ class ReviewController extends Controller
         }
 
         return response()->json(null, Response::HTTP_NOT_FOUND);
+    }
+
+    public function getReviewsByMovieId($movie_id)
+    {
+        $reviews = Review::where('movie_id', $movie_id)
+            ->get();
+
+        return response()->json($reviews, Response::HTTP_OK);
     }
 }

@@ -12,7 +12,6 @@ class ChatController extends Controller
         $username = $request->input("username");
         $message = $request->input("message");
 
-        event(new ChatMessageEvent($username, $message));
         return response()->json(["status" => "Message Sent"], 200);
     }
 }

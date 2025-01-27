@@ -3,10 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ReviewController;
 
 // Authenticating the user
 Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+
+//About user
+Route::get('username/{id}', [App\Http\Controllers\UserController::class, 'getUsername']);
 
 // Movies
 Route::get('/movies/trending', [App\Http\Controllers\MovieController::class, 'getTrendingMovies']);
@@ -16,7 +20,6 @@ Route::get('/movies/page/{page}', [App\Http\Controllers\MovieController::class, 
 Route::get('/movies/page/{page}/search/{search}', [App\Http\Controllers\MovieController::class, 'searchMovieByText']);
 Route::get('/movies/page/{page}/genre/{genre}/sort/{sort}', [App\Http\Controllers\MovieController::class, 'getMoviesByGenreWithSort']);
 
-Route::post("/send", [ChatController::class, "sendMessage"]);
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -27,6 +30,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Reviews
     Route::post('/review', [App\Http\Controllers\ReviewController::class, 'storeReview']);
     Route::get('/review/{movie_id}', [App\Http\Controllers\ReviewController::class, 'hasUserReviewedMovie']);
-    Route::get('/allreviews', [App\Http\Controllers\ReviewController::class, 'getUserReviews']);
+    Route::get('/reviews', [App\Http\Controllers\ReviewController::class, 'getUserReviews']);
     Route::delete('/review/delete/{movie_id}', [App\Http\Controllers\ReviewController::class, 'deleteReview']);
 });
+
+Route::post("/send", [ChatController::class, "sendMessage"]);
+Route::get("/allreviews/{movie_id}", [ReviewController::class, "getReviewsByMovieId"]);

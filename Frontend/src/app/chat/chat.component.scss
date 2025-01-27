@@ -1,51 +1,36 @@
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  margin: 20px auto;
-  border: 1px solid #ccc;
+.comment-item {
+  background-color: #37455a;
+  padding: 15px;
+  margin-bottom: 15px;
   border-radius: 8px;
-  padding: 10px;
-  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.messages {
-  flex-grow: 1;
-  overflow-y: auto;
-  max-height: 300px;
-  padding: 5px;
-  border-bottom: 1px solid #ccc;
+.comment-username,
+.comment-rating {
+  font-size: 1.1rem;
+  color: #ffffff;
 }
 
-.message {
-  padding: 5px;
-  margin: 5px 0;
-  background-color: #e0e0e0;
-  border-radius: 5px;
+.comment-rating {
+  font-size: 1.2rem;
+  color: #ff9800;
+  margin-left: 10px; /* Space between username and rating */
 }
 
-.input-container {
-  display: flex;
-  gap: 10px;
+.comment-item > .comment-username,
+.comment-item > .comment-rating {
+  display: inline-block; /* Display both on same row */
+}
+
+.comment-item > .comment-username {
+  font-weight: bolder;
+}
+
+.comment-content {
   margin-top: 10px;
-}
-
-input {
-  flex-grow: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
+  font-size: 1rem;
+  color: #000000;
+  line-height: 1.5;
+  font-weight: bold;
 }
