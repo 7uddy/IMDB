@@ -53,4 +53,8 @@ export class ApiService {
   deleteReview(movieId: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/review/delete/${movieId}`, { withCredentials: true });
   }
+
+  sendMessage(username: string, message: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/send`, { username, message });
+  }
 }

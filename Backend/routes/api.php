@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 
 // Authenticating the user
 Route::post('register', [App\Http\Controllers\AuthController::class, 'register']);
@@ -15,6 +16,7 @@ Route::get('/movies/page/{page}', [App\Http\Controllers\MovieController::class, 
 Route::get('/movies/page/{page}/search/{search}', [App\Http\Controllers\MovieController::class, 'searchMovieByText']);
 Route::get('/movies/page/{page}/genre/{genre}/sort/{sort}', [App\Http\Controllers\MovieController::class, 'getMoviesByGenreWithSort']);
 
+Route::post("/send", [ChatController::class, "sendMessage"]);
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
 

@@ -1,12 +1,30 @@
-<div class="chat-container">
-  <div class="messages">
-    <div *ngFor="let msg of messages" class="message">
-      {{ msg }}
+<div class="card mx-4">
+  <div class="card-body d-flex flex-column" style="height: 500px;">
+    <div class="d-flex align-items-center mb-3">
+      <h5 class="card-title mb-0 me-3">{{username}}</h5>
     </div>
+    <hr>
+
+    <ul class="list-unstyled d-flex flex-column flex-grow-1 mb-3 overflow-auto">
+      <li *ngFor="let msg of messages"
+          class="d-flex mb-2"
+          [ngClass]="{'justify-content-end': msg.username === username, 'justify-content-start': msg.username !== username}">
+        <div class="d-flex flex-column">
+          <div [ngClass]="msg.username === username ? 'message-right' : 'message-left'">
+            {{msg.message}}
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 
-  <div class="input-container">
-    <input [(ngModel)]="message" placeholder="Scrie un mesaj..." />
-    <button (click)="sendMessage()">Trimite</button>
+  <div class="d-flex p-3 border-top">
+    <input
+      type="text"
+      class="form-control me-2"
+      placeholder="Start typing..."
+      [(ngModel)]="message"
+    />
+    <button (click)="send()" class="btn btn-success">Send</button>
   </div>
 </div>
