@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderComponent } from "../header/header.component";
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthStateService } from '../services/auth-state.service';
 
 @Component({
   selector: 'app-review',
@@ -12,13 +13,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   styleUrl: './review.component.scss'
 })
 export class ReviewComponent {
+  isAuthenticated: boolean = false;
   movie: any;
   posterImagePath: string = '';
   movieId: any;
   reviewForm: FormGroup;
   errorMessage: string = '';
 
-  constructor(private api: ApiService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
+  constructor(private api: ApiService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private authState: AuthStateService) {
     this.reviewForm = this.fb.group({
       rating: [null, [Validators.required, Validators.min(1), Validators.max(10)]],
       reviewText: ['', [Validators.required]],
@@ -26,6 +28,9 @@ export class ReviewComponent {
   }
 
   ngOnInit() {
+    this.authState.getAuthState().subscribe(val => {
+      this.isAuthenticated = val;
+    });
     this.route.paramMap.subscribe(params => {
       this.movieId = params.get('id');
     });

@@ -19,35 +19,31 @@ interface Review {
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  username = ''; // User's name
-  rating = ''; // Movie rating
-  review_text = ''; // Review text content
-  reviews: Review[] = []; // List of reviews
+  username = '';
+  rating = '';
+  review_text = '';
+  reviews: Review[] = [];
   pusherInstance: any;
   channel: any;
-  movieId: string = ''; // Current movie ID
-  isLoading = true; // Loading state
+  movieId: string = '';
+  isLoading = true;
 
   constructor(private api: ApiService, private route: ActivatedRoute,private router:Router) {}
 
   ngOnInit(): void {
-    this.movieId = this.route.snapshot.paramMap.get('id')!; // Get movie ID from URL
+    this.movieId = this.route.snapshot.paramMap.get('id')!;
 
-    // Fetch reviews from the API
     this.api.getAllUsersReviews(this.movieId).subscribe(
       (reviews: any[]) => {
-        // Get all user IDs from the reviews
         const userRequests = reviews.map((review) =>
           this.api.getUsername(review.user_id)
         );
 
-        // Use forkJoin to fetch usernames in parallel
         forkJoin(userRequests).subscribe(
           (usernames: any) => {
-            // Combine reviews with the corresponding usernames
             this.reviews = reviews.map((review, index) => ({
               ...review,
-              username: usernames[index].username, // Add the username from the API response
+              username: usernames[index].username,
             }));
             console.log('Reviews with usernames:', this.reviews);
           },
@@ -55,25 +51,22 @@ export class ChatComponent implements OnInit, OnDestroy {
             console.error('Error fetching usernames:', error);
           },
           () => {
-            // Finally set loading to false after reviews and usernames are combined
             this.isLoading = false;
           }
         );
       },
       (error: any) => {
         console.error('Error fetching reviews:', error);
-        this.isLoading = false; // Set loading state to false in case of error
+        this.isLoading = false;
       }
     );
 
-    // Connect to Pusher channel for the movie
     this.pusherInstance = new Pusher('3e4c49a8b24aa3eaf880', {
       cluster: 'eu',
     });
 
     this.channel = this.pusherInstance.subscribe(`film.${this.movieId}`);
 
-    // Listen for new reviews being added in real-time
     this.channel.bind('review.added', (data: any) => {
       console.log(data);
       this.reviews.push({
@@ -85,7 +78,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubscribe from the Pusher channel when the component is destroyed
     this.pusherInstance.unsubscribe(`film.${this.movieId}`);
   }
 

@@ -24,9 +24,9 @@ export class RatingComponent implements OnChanges{
     const emptyStars = maxStars - fullStars - halfStar;
 
     this.stars= [
-      ...Array(fullStars).fill('bi bi-star-fill text-warning'), // stele pline
-      ...Array(halfStar).fill('bi bi-star-half text-warning'),  // stea jumătate
-      ...Array(emptyStars).fill('bi bi-star text-muted')        // stele goale
+      ...Array(fullStars).fill('bi bi-star-fill text-warning'), // full stars
+      ...Array(halfStar).fill('bi bi-star-half text-warning'),  // half stars
+      ...Array(emptyStars).fill('bi bi-star text-muted')        // empty stars
     ];
     return this.stars;
   }

@@ -3,7 +3,6 @@
 <div class="home-container" *ngIf="(trendingMovies | async) as trending">
   <div class="all-movies" *ngIf="(topRated | async) as ratedMovies; else loading">
 
-    <!-- Trending Movies Section -->
     <div class="trending">
       <div class="top">
         <h4>Trending Movies</h4>
@@ -17,7 +16,6 @@
       </div>
     </div>
 
-    <!-- Top Rated Movies Section -->
     <div class="popular-movies">
       <div class="top">
         <h4>Top rated</h4>

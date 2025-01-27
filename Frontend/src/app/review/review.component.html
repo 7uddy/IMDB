@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="review-container">
+<div class="review-container" *ngIf="isAuthenticated">
   <div class="review-left">
     <img [src]="'https://image.tmdb.org/t/p/w500' + posterImagePath" alt="Movie Poster" class="movie-poster">
   </div>
@@ -27,4 +27,8 @@
       </div>
     </form>
   </div>
+</div>
+
+<div *ngIf="!isAuthenticated" class="not-authenticated">
+  <p>Please log in to make a review.</p>
 </div>

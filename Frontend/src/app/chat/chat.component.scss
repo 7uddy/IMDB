@@ -15,12 +15,12 @@
 
 .comment-rating {
   color: #ff9800;
-  margin-left: 10px; /* Space between username and rating */
+  margin-left: 10px;
 }
 
 .comment-item > .comment-username,
 .comment-item > .comment-rating {
-  display: inline-block; /* Display both on same row */
+  display: inline-block;
 }
 
 .comment-item > .comment-username {

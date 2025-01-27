@@ -1,11 +1,9 @@
 <div class="comments-container">
   <h2>Reviews</h2>
-  <!-- Mesaj de loading când este încărcat -->
   <div *ngIf="isLoading" class="loading-message">
     <p>Loading reviews...</p>
   </div>
   <div class="comment-form" *ngIf="!isLoading">
-    <!-- Afișează recenziile -->
     <div *ngIf="reviews.length > 0; else noReviews">
       <div *ngFor="let review of reviews" class="comment-item">
         <p class="comment-username" (click)="goToUserProfile(review)" >{{ review.username }}</p>

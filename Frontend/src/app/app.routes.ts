@@ -8,6 +8,7 @@ import { FilmsComponent } from './films/films.component';
 import { ReviewComponent } from './review/review.component';
 import { UserReviewsComponent } from './user-reviews/user-reviews.component';
 import { UserComponent } from './user/user.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
   {path:'',redirectTo:'home',pathMatch:'full'},
@@ -16,8 +17,8 @@ export const routes: Routes = [
   {path:'home',component:HomeComponent},
   {path:'films',component:FilmsComponent},
   {path:'movie/:id',component:MovieComponent},
-  {path:'movie/:id/review',component:ReviewComponent},
-  {path:'reviews',component:UserReviewsComponent},
+  {path:'movie/:id/review',component:ReviewComponent, canActivate: [AuthGuard]},
+  {path:'reviews',component:UserReviewsComponent, canActivate: [AuthGuard]},
   {path:'user/:username',component:UserComponent},
   {path:"**",component:HomeComponent}
 ];

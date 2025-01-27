@@ -1,6 +1,5 @@
 <app-header></app-header>
 <div class="profile" *ngIf="isLoaded; else loading">
-  <!-- Profile Information -->
   <div class="profile-info">
     <div class="profile-image">
       <img
@@ -16,7 +15,6 @@
     </div>
   </div>
 
-  <!-- Reviews Section -->
   <div class="reviews">
     <p>User's Ratings</p>
     <ng-container *ngFor="let review of reviews">
@@ -31,7 +29,6 @@
   </div>
 </div>
 
-<!-- Loading State -->
 <ng-template #loading>
   <div class="loading-spinner">
     <span class="loader"></span>
