@@ -80,17 +80,17 @@ ng serve
 
 ## Photos with Desktop layout
 
-| Picture 1            | Picture 2            |
+|            |          |
 |----------------------|----------------------|
 | ![Picture1](Images/Picture1.png) | ![Picture2](Images/Picture2.png) |
 | ![Picture1](Images/Picture3.png) | ![Picture2](Images/Picture4.png) |
 | ![Picture1](Images/Picture5.png) | ![Picture2](Images/Picture6.png) |
 | ![Picture1](Images/Picture7.png) | ![Picture2](Images/Picture8.png) |
-| ![Picture1](Images/Picture9.png) | 
+![Picture1](Images/Picture9.png) 
 
 ## Photos with Mobile layout
 
-| Picture 1            | Picture 2            |
+|            |          |
 |----------------------|----------------------|
 | ![Picture2](Images/Picture10.png) | ![Picture1](Images/Picture11.png) | 
 | ![Picture2](Images/Picture12.png) | ![Picture1](Images/Picture13.png) |
