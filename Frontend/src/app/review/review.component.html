@@ -22,7 +22,7 @@
       <textarea formControlName="reviewText" placeholder="Write your review here..." rows="4"></textarea>
 
       <div class="review-actions">
-        <button (click)="cancelReview()" type="button" class="btn btn-cancel">Cancel</button>
+        <button (click)="cancelReview()" type="cancel" class="btn btn-cancel">Cancel</button>
         <button type="submit" [disabled]="reviewForm.invalid" class="btn btn-submit">Submit</button>
       </div>
     </form>
