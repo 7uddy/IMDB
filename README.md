@@ -75,7 +75,10 @@ cd frontend
 npm install
 ng serve
 ```
-### Photos with Desktop layout
+## System Architectural Diagram
+![Diagram](Images/Diagram.png)
+
+## Photos with Desktop layout
 
 | Picture 1            | Picture 2            |
 |----------------------|----------------------|
@@ -85,7 +88,7 @@ ng serve
 | ![Picture1](Images/Picture7.png) | ![Picture2](Images/Picture8.png) |
 | ![Picture1](Images/Picture9.png) | 
 
-### Photos with Mobile layout
+## Photos with Mobile layout
 
 | Picture 1            | Picture 2            |
 |----------------------|----------------------|
