@@ -64,6 +64,19 @@ PUSHER_APP_CLUSTER=your_cluster
 ```bash
 php artisan migrate
 ```
+### Change authentication
+The authentication need to be updated to check Bearer token from requests by default. For this, handle function from Authenticate (from Backend\vendor\laravel\framework\src\Illuminate\Auth\Middleware\Authenticate.php) has to be overwritten like this:
+```bash
+public function handle($request, Closure $next, ...$guards)
+    {
+        if($jwt=$request->cookie('jwt')){
+            $request->headers->set('Authorization', 'Bearer '.$jwt);
+        }
+        $this->authenticate($request, $guards);
+
+        return $next($request);
+    }
+```
 ### Start the Laravel server
 ```bash
 php artisan serve
